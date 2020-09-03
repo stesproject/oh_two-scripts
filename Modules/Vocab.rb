@@ -8,18 +8,18 @@
 module Vocab
 
   # Shop Screen
-  ShopBuy         = "Compra!"
-  ShopSell        = "Vendi!"
-  ShopCancel      = "Ciao..."
-  Possession      = "Ne hai"
+  ShopBuy         = "Buy"
+  ShopSell        = "Sell"
+  ShopCancel      = "Bye..."
+  Possession      = "Owned"
 
   # Status Screen
-  ExpTotal        = "Esperienza Totale:"
-  ExpNext         = "Al prossimo livello:"
+  ExpTotal        = "Experience"
+  ExpNext         = "Next Level"
 
   # Save/Load Screen
-  SaveMessage     = "Scegli dove salvare la partita!"
-  LoadMessage     = "Quale partita vuoi caricare?"
+  SaveMessage     = "Choose a slot to save the game."
+  LoadMessage     = "Choose a slot to load the game."
   File            = "Slot"
 
   # Display when there are multiple members
@@ -75,32 +75,37 @@ module Vocab
 
   # Level
   def self.level
-    return $data_system.terms.level
+    return $local.get_text("level")
+    # return $data_system.terms.level
   end
 
   # Level (Abbreviation)
   def self.level_a
-    return $data_system.terms.level_a
+    return $local.get_text("lv")
   end
 
   # HP
   def self.hp
-    return $data_system.terms.hp
+    return $local.get_text("hp")
+    # return $data_system.terms.hp
   end
 
   # HP (Abbreviation)
   def self.hp_a
-    return $data_system.terms.hp_a
+    return $local.get_text("hp")
+    # return $data_system.terms.hp_a
   end
 
   # MP
   def self.mp
-    return $data_system.terms.mp
+    return $local.get_text("mp")
+    # return $data_system.terms.mp
   end
 
   # MP (Abbreviation)
   def self.mp_a
-    return $data_system.terms.mp_a
+    return $local.get_text("mp")
+    # return $data_system.terms.mp_a
   end
 
   # Attack
@@ -125,27 +130,32 @@ module Vocab
 
   # Weapon
   def self.weapon
-    return $data_system.terms.weapon
+    return $local.get_text("weapon")
+    # return $data_system.terms.weapon
   end
 
   # Shield
   def self.armor1
-    return $data_system.terms.armor1
+    return $local.get_text("armor1")
+    # return $data_system.terms.armor1
   end
 
   # Helmet
   def self.armor2
-    return $data_system.terms.armor2
+    return $local.get_text("armor2")
+    # return $data_system.terms.armor2
   end
 
   # Body Armor
   def self.armor3
-    return $data_system.terms.armor3
+    return $local.get_text("armor3")
+    # return $data_system.terms.armor3
   end
 
   # Accessory
   def self.armor4
-    return $data_system.terms.armor4
+    return $local.get_text("armor4")
+    # return $data_system.terms.armor4
   end
 
   # Weapon 1
@@ -160,27 +170,32 @@ module Vocab
 
   # Attack
   def self.attack
-    return $data_system.terms.attack
+    return $local.get_text("attack")
+    # return $data_system.terms.attack
   end
 
   # Skill
   def self.skill
-    return $data_system.terms.skill
+    return $local.get_text("skill")
+    # return $data_system.terms.skill
   end
 
   # Guard
   def self.guard
-    return $data_system.terms.guard
+    return $local.get_text("guard")
+    # return $data_system.terms.guard
   end
 
   # Item
   def self.item
-    return $data_system.terms.item
+    return $local.get_text("item")
+    # return $data_system.terms.item
   end
 
   # Equip
   def self.equip
-    return $data_system.terms.equip
+    return $local.get_text("equip")
+    # return $data_system.terms.equip
   end
 
   # Status
@@ -190,12 +205,14 @@ module Vocab
 
   # Save
   def self.save
-    return $data_system.terms.save
+    return $local.get_text("save")
+    # return $data_system.terms.save
   end
 
   # Game End
   def self.game_end
-    return $data_system.terms.game_end
+    return $local.get_text("game_end")
+    # return $data_system.terms.game_end
   end
 
   # Fight
@@ -210,27 +227,32 @@ module Vocab
 
   # New Game
   def self.new_game
-    return $data_system.terms.new_game
+    return $local.get_text("new_game")
+    # return $data_system.terms.new_game
   end
 
   # Continue
   def self.continue
-    return $data_system.terms.continue
+    return $local.get_text("continue")
+    # return $data_system.terms.continue
   end
 
   # Shutdown
   def self.shutdown
-    return $data_system.terms.shutdown
+    return $local.get_text("shutdown")
+    # return $data_system.terms.shutdown
   end
 
   # To Title
   def self.to_title
-    return $data_system.terms.to_title
+    return $local.get_text("to_title")
+    # return $data_system.terms.to_title
   end
 
   # Cancel
   def self.cancel
-    return $data_system.terms.cancel
+    return $local.get_text("cancel")
+    # return $data_system.terms.cancel
   end
 
   # G (Currency Unit)

@@ -1,7 +1,8 @@
 module ADDON
-  ASK_FULLSCREEN = true # if set to false it wont ask you and it'll go straight to
-                    # fullscreen
+  ASK_LANGUAGE = $default_language == "" # if set to false it wont ask you and it'll go straight to fullscreen
+  TEXT = "Select your language:"
 end
+
 class Window_Text < Window_Base
   def initialize(x, y)
     super(x, y, 544, 64)
@@ -9,15 +10,22 @@ class Window_Text < Window_Base
   end
   def refresh
     self.contents.clear
-    self.contents.draw_text(0, 0, 544, 32, "Vuoi giocare a schermo intero?")
+    self.contents.draw_text(0, 0, 544, 32, ADDON::TEXT)
   end
 end
 
 class Scene_Title
+  $lang = $default_language
+  $fullscreen = $TEST
   
   alias main_fullscreen? main
   def main
-    if ADDON::ASK_FULLSCREEN 
+    $locale.load_language
+    if $fullscreen == false
+      auto
+    end
+
+    if ADDON::ASK_LANGUAGE && $lang == ""
       unless $game_started 
         Graphics.freeze
         $data_system = load_data('Data/System.rvdata')
@@ -25,9 +33,12 @@ class Scene_Title
         @text_window = Window_Text.new(92, 128)
         @text_window.back_opacity = 0
         @text_window.opacity = 0
-        s1 = "Sì"
-        s2 = "No"
-        @window = Window_Command.new(96, [s1 ,s2])
+        choices = []
+        Localization::LANG.each do |lang|
+          choices.push(Localization::LANGUAGES[lang])
+        end
+        @window = Window_Command.new(96, choices)
+        @window.windowskin = Cache.system("Window2")
         @window.x = 92
         @window.y = 240 - @window.height / 2
         @window.opacity = 0
@@ -47,33 +58,28 @@ class Scene_Title
         Graphics.freeze
       end
     else
-      auto
+      $game_started = true
     end
     main_fullscreen?
   end
   
   def update_window
     if Input.trigger?(Input::C)
-      if @window.index == 0
-        Sound.play_decision
-        keybd = Win32API.new 'user32.dll', 'keybd_event', ['i', 'i', 'l', 'l'], 'v'
-        keybd.call(0xA4, 0, 0, 0)
-        keybd.call(13, 0, 0, 0)
-        keybd.call(13, 0, 2, 0)
-        keybd.call(0xA4, 0, 2, 0)
-      else
-      end
-      $game_started = true
-    elsif Input.trigger?(Input::B)
+      Sound.play_decision
+      $lang = Localization::LANG[@window.index]
+
+      $locale.save_language
       $game_started = true
     end
   end
+
   def auto
     keybd = Win32API.new 'user32.dll', 'keybd_event', ['i', 'i', 'l', 'l'], 'v'
     keybd.call(0xA4, 0, 0, 0)
     keybd.call(13, 0, 0, 0)
     keybd.call(13, 0, 2, 0)
     keybd.call(0xA4, 0, 2, 0)
-    $game_started = true
+    $fullscreen = true
+    # $game_started = true
   end
 end

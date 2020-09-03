@@ -2,7 +2,7 @@
 # Crissaegrim HUD
 #==============================================================================
 module Crissaegrim_Hud
-  
+
 Background = "HUD-Background" # Imagem de fundo da hud
 
 HP_Bar = "HP-Bar" # Imagem da barra de HP
@@ -13,7 +13,7 @@ Base = "Bars-Base" # Imagm do fundo das barras
 
 OnOff_Hud_Switch = 40 # Switch que ativa / desativa a HUD
 
-Show_Hide_Button = Input::Tab # Tecla que mostra / esconde a HUD
+Show_Hide_Button = Input::Fkeys[12] # Tecla que mostra / esconde a HUD
 
 end
 #------------------------------------------------------------------------------

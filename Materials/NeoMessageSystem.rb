@@ -195,11 +195,22 @@ class Window_Base
   
   NAMEBOX_TEXT_AFTER_NAME = "" # Aggiungi un testo dopo il nome
   
-  NAMEBOX_BOX_WIDTH_PLUS = 7 # Aumenta la lunghezza del box nome
+  NAMEBOX_BOX_WIDTH_PLUS = 6 # Aumenta la lunghezza del box nome
   NAMEBOX_BOX_HEIGHT_PLUS = 7 # Aumenta l'altezza del box nome
   
   MOVE_NAMEBOX = false
   # (true/false) Muovi il box nome se il face è a destra.
+
+  $msg_background = {
+    "normal"      => 0,
+    "dark"        => 1,
+    "transparent" => 2
+  }
+  $msg_position = {
+    "bottom"   => 2,
+    "middle"   => 1,
+    "top"      => 0
+  }
   
   #---------------------------------
   # [END] SETUP SCRIPT PART
@@ -479,6 +490,7 @@ class Window_Message < Window_Selectable
     # DEFAULT FEATURES
     #-----------------------
     @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
+    @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
     @text.gsub!(/\\N\[([0-9]+)\]/i) { "\x01{#{NMS_ACTOR_NAME_COLOR_ID}}" + $game_actors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     @text.gsub!(/\\C\[([0-9]+)\]/i) { "\x01{#{$1}}" }
     @text.gsub!(/\\G/i)              { "\x02" }
@@ -682,10 +694,10 @@ class Window_Message < Window_Selectable
         @gold_window.refresh
         @gold_window.open
       when "\x03"
-        @wait_count = 15
+        @wait_count = $TEST ? 0 : 15
         break
       when "\x04"
-        @wait_count = 60
+        @wait_count = $TEST ? 0 :  60
         break
       when "\x05"
         self.pause = true
@@ -1014,8 +1026,8 @@ class Game_Interpreter
       $game_message.event_id = @event_id
       $game_message.face_name = @params[0]
       $game_message.face_index = @params[1]
-      $game_message.background = @params[2]
-      $game_message.position = @params[3]
+      $game_message.background = $msg_params ? $msg_background[$msg_params[0]] : @params[2]
+      $game_message.position = $msg_params ? $msg_position[$msg_params[1]] : @params[3]
       @index += 1
       while @list[@index].code == 401
         $game_message.texts.push(@list[@index].parameters[0])

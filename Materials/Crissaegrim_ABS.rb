@@ -70,7 +70,6 @@ Distance_Skills[9] = ["Energy Ball", 3, 6, 20, 30]
 Distance_Skills[10] = ["Energy Ball", 3, 6, 20, 30]
 
 #------------------------------------------------------------------------------
-#------------------------------------------------------------------------------
 # Skills com animação
 # Para criar uma skill com animação, copie: Animate_Weapons[X] = ["Y", Z] e mude:
 # X para o id da arma no database e Y para o prefixo do nome do char atacando, e Z para o Index do Char
@@ -263,6 +262,7 @@ class Game_Event < Game_Character
   attr_reader :kill_weapon
   attr_reader :kill_skill
   attr_reader :kill_item
+  attr_reader :no_jump
   attr_accessor :skill_id
   attr_accessor :deffending
   alias crissaegrim_abs_gevent_initialize initialize
@@ -290,6 +290,7 @@ class Game_Event < Game_Character
     @enemy_id = check_comment("Enemy")
     @follow_distance = check_comment("Follow")
     @erase = check_com("Die Erase")
+    @no_jump = check_com("No Jump")
     @switch_local_a = check_com("Die Switch Local A")
     @switch_local_b = check_com("Die Switch Local B")
     @switch_local_c = check_com("Die Switch Local C")
@@ -775,7 +776,9 @@ def normal_attack_right
           else
             event.enemy_called.attack_effect(@actor)
             event.damage = dmg
-            event.jump(0,0)
+            if event.no_jump != true
+              event.jump(0,0)
+            end
           end
           @right_attack_time = 15 - (@actor.agi / 100)
         end
@@ -806,7 +809,9 @@ def normal_attack_left
         else
           event.enemy_called.attack_effect(@actor)
           event.damage = dmg
-          event.jump(0,0)
+          if event.no_jump != true
+            event.jump(0,0)
+          end
         end
         @left_attack_time = 15 - (@actor.agi / 100)
       end
@@ -839,7 +844,9 @@ def skill_attack_normal
           else
             event.enemy_called.effect_skill(@actor, $data_skills[@assigned_skill])
             event.damage = dmg
-            event.jump(0,0)
+            if event.no_jump != true
+              event.jump(0,0)
+            end
           end
           @skill_attack_time = 60 - (@actor.agi / 100)
         end
@@ -861,22 +868,24 @@ def skill_attack_all
     if event.in_battle
       return if event.enemy_called.dead?
       if @actor.mp >= $data_skills[@assigned_skill].mp_cost and @skill_attack_time <= 0
-         @actor.mp -= @actor.calc_mp_cost($data_skills[@assigned_skill])
-         $game_temp.common_event_id = $data_skills[@assigned_skill].common_event_id if $data_skills[@assigned_skill].common_event_id > 0
-         dmg = event.enemy_called.make_obj_damage_value(@actor, $data_skills[@assigned_skill])
-         event.animation_id = $data_skills[@assigned_skill].animation_id
-         if event.deffending == true and event.x == guard_x and event.y == guard_y or event.kill_weapon > 0 or event.kill_skill > 0 or event.kill_item > 0 and !$data_skills[@assigned_skill].ignore_defense
-           event.damage = ""
-         else
-           event.enemy_called.effect_skill(@actor, $data_skills[@assigned_skill])
-           event.damage = dmg
-           event.jump(0,0)
-         end
-         @skill_attack_time = 60 - (@actor.agi / 100)
-       end
-     end
-   end
- end
+          @actor.mp -= @actor.calc_mp_cost($data_skills[@assigned_skill])
+          $game_temp.common_event_id = $data_skills[@assigned_skill].common_event_id if $data_skills[@assigned_skill].common_event_id > 0
+          dmg = event.enemy_called.make_obj_damage_value(@actor, $data_skills[@assigned_skill])
+          event.animation_id = $data_skills[@assigned_skill].animation_id
+          if event.deffending == true and event.x == guard_x and event.y == guard_y or event.kill_weapon > 0 or event.kill_skill > 0 or event.kill_item > 0 and !$data_skills[@assigned_skill].ignore_defense
+            event.damage = ""
+          else
+            event.enemy_called.effect_skill(@actor, $data_skills[@assigned_skill])
+            event.damage = dmg
+            if event.no_jump != true
+              event.jump(0,0)
+            end
+          end
+          @skill_attack_time = 60 - (@actor.agi / 100)
+        end
+      end
+    end
+  end
 def skill_recover
   if @actor.mp >= $data_skills[@assigned_skill].mp_cost and @skill_attack_time <= 0
     @actor.mp -= @actor.calc_mp_cost($data_skills[@assigned_skill])
@@ -907,7 +916,9 @@ def item_normal_attack
         else
           event.enemy_called.effect_item(@actor, $data_items[@assigned_item])
           event.damage = dmg
-          event.jump(0,0)
+          if event.no_jump != true
+            event.jump(0,0)
+          end
         end
         @item_attack_time = 60 - (@actor.agi / 100)
       end
@@ -1050,7 +1061,9 @@ class Game_Range < Game_Character
     else
       enemy.enemy_called.attack_effect($game_party.members[0])
       enemy.damage = dmg
-      enemy.jump(0,0)
+      if enemy.no_jump != true
+        enemy.jump(0,0)
+      end
     end
   end
   def hurt_enemy_weapon_left(enemy)
@@ -1071,7 +1084,9 @@ class Game_Range < Game_Character
     else
       enemy.enemy_called.attack_effect($game_party.members[0])
       enemy.damage = dmg
-      enemy.jump(0,0)
+      if enemy.no_jump != true
+        enemy.jump(0,0)
+      end
     end
   end
   def hurt_enemy_skill(enemy)
@@ -1088,7 +1103,9 @@ class Game_Range < Game_Character
     else
       enemy.enemy_called.effect_skill($game_party.members[0],$data_skills[skl])
       enemy.damage = dmg
-      enemy.jump(0,0)
+      if enemy.no_jump != true
+        enemy.jump(0,0)
+      end
     end
   end
   def hurt_enemy_item(enemy)
@@ -1105,7 +1122,9 @@ class Game_Range < Game_Character
     else
       enemy.enemy_called.effect_item($game_party.members[0],$data_items[itm])
       enemy.damage = dmg
-      enemy.jump(0,0)
+      if enemy.no_jump != true
+        enemy.jump(0,0)
+      end
     end
   end
   def guard(attacker, target)
@@ -1803,7 +1822,7 @@ class Window_Item < Window_Selectable
     if $item_lock_description <= 0
     @help_window.set_text(item == nil ? "" : item.description)
   else
-    @help_window.set_text(item == nil ? "" : "Oggetto assegnato!")
+    @help_window.set_text(item == nil ? "" : "Item assigned!")
   end
 end
 end

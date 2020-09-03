@@ -5,6 +5,8 @@
 #==============================================================================
 
 class Scene_File < Scene_Base
+  # save_message = $local.get_text("save_message")
+  # load_message = $local.get_text("load_message")
   #--------------------------------------------------------------------------
   # * Object Initialization
   #     saving     : save flag (if false, load screen)
@@ -26,10 +28,10 @@ class Scene_File < Scene_Base
     create_savefile_windows
     if @saving
       @index = $game_temp.last_file_index
-      @help_window.set_text(Vocab::SaveMessage)
+      @help_window.set_text(save_message)
     else
       @index = self.latest_file_index
-      @help_window.set_text(Vocab::LoadMessage)
+      @help_window.set_text(load_message)
     end
     @savefile_windows[@index].selected = true
   end

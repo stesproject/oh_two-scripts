@@ -71,7 +71,7 @@ module Wora_NSS
   # Usa '' per nessun background
   NSS_IMAGE_BG_OPACITY = 255 # Opacità del background.
   
-  MAX_SAVE_SLOT = 30 # Numero massimo di saveslot.
+  MAX_SAVE_SLOT = 13 # Numero massimo di saveslot.
   SLOT_NAME = 'Slot {id}'
   # nome dell'autosalvataggio (mostrato nella schermata di caricamento), 
   #Usa {id} per l'ID dello slot
@@ -83,18 +83,13 @@ module Wora_NSS
   SAVED_SLOT_ICON = 23 # IconaIndex per il save slot
   EMPTY_SLOT_ICON = 22 # Colore per lo slot vuoto
   
-  EMPTY_SLOT_TEXT = '-Vuoto-' # Testo per gli slot vuoti
-  
   DRAW_GOLD = true # Mostara oro
   DRAW_PLAYTIME = true # Mostra tempo di gioco
   DRAW_LOCATION = true # Mostra locazione
   DRAW_FACE = true # Mostra faccia giocatore
   DRAW_LEVEL = false # Mostra livello giocatore
   DRAW_NAME = true # mostra nome giocatore
-  
-  PLAYTIME_TEXT = 'Tempo di gioco: '
-  GOLD_TEXT = ' '
-  LOCATION_TEXT = 'Livello: '
+
   LV_TEXT = 'Lv '
   
   MAP_NAME_TEXT_SUB = %w{}
@@ -107,8 +102,7 @@ module Wora_NSS
   FACE_BORDER = Color.new(0,0,0,200) # Colore bordo faccia
   
   ## fINESTRA CONFERMA SALVATAGGIO ##
-  SFC_Text_Confirm = 'Sovrascrivere?' # Testo per confermare il salvataggio
-  SFC_Text_Cancel = 'Annulla' # Testo per cancellare la schermata di conferma
+  SFC_Text_Cancel = 'Cancel' # Testo per cancellare la schermata di conferma
   SFC_Window_Width = 200 # Larghezza della finestra di conferma
   SFC_Window_X_Offset = 0 # Muovi la finestra di conferma orizontalmente
   SFC_Window_Y_Offset = 0 # Muovi la finestra di conferma verticalmente
@@ -134,6 +128,8 @@ class Scene_File < Scene_Base
   def start
     super
     create_menu_background
+    save_message = $local.get_text("save_message")
+    load_message = $local.get_text("load_message")
     if NSS_IMAGE_BG != ''
       @bg = Sprite.new
       @bg.bitmap = Cache.picture(NSS_IMAGE_BG)
@@ -157,10 +153,10 @@ class Scene_File < Scene_Base
   end
     if @saving
       @index = $game_temp.last_file_index
-      @help_window.set_text(Vocab::SaveMessage)
+      @help_window.set_text(save_message)
     else
       @index = self.latest_file_index
-      @help_window.set_text(Vocab::LoadMessage)
+      @help_window.set_text(load_message)
       (1..MAX_SAVE_SLOT).each do |i|
         @window_slotlist.draw_item(i-1, false) if !@window_slotdetail.file_exist?(i)
       end
@@ -224,8 +220,8 @@ class Scene_File < Scene_Base
     if Input.trigger?(Input::C)
       if @saving and @window_slotdetail.file_exist?(@last_slot_index + 1)
         Sound.play_decision
-        text1 = SFC_Text_Confirm
-        text2 = SFC_Text_Cancel
+        text1 = $local.get_text("ask_overwrite")
+        text2 = $local.get_text("cancel")
         @confirm_window = Window_Command.new(SFC_Window_Width,[text1,text2])
         @confirm_window.x = ((544 - @confirm_window.width) / 2) + SFC_Window_X_Offset
         @confirm_window.y = ((416 - @confirm_window.height) / 2) + SFC_Window_Y_Offset
@@ -295,9 +291,10 @@ class Scene_File < Scene_Base
   
   #Finestra per informare che il giocatore non puo salvare qui
   def saving_not_allowed
+    save_message = $local.get_text("save_message")
     Sound.play_buzzer
     b = Bitmap.new(340,60) 
-    b.draw_text(0, 20,340, 20, "Non puoi salvare su questo slot.") 
+    b.draw_text(0, 20,340, 20, $local.get_text("cannot_save")) 
     w = Window_Message.new
     w.contents = b
     w.width = 380
@@ -412,38 +409,41 @@ class Window_NSS_SlotDetail < Window_Base
     save_data['gamemap'].display_y)
       if DRAW_GOLD
         # MOSTRA ORO
+        gold_text = $local.get_text("currency") + ": "
         gold_textsize = contents.text_size(save_data['gamepar'].gold).width
-        goldt_textsize = contents.text_size(GOLD_TEXT).width
+        goldt_textsize = contents.text_size(gold_text).width
         contents.font.color = system_color
-        contents.draw_text(0, 0, goldt_textsize, WLH, GOLD_TEXT)
+        contents.draw_text(0, 0, goldt_textsize, WLH, gold_text)
         contents.draw_text(goldt_textsize + gold_textsize,0,200,WLH, Vocab::gold)
         contents.font.color = normal_color
         contents.draw_text(goldt_textsize, 0, gold_textsize, WLH, save_data['gamepar'].gold)
       end
       if DRAW_PLAYTIME
         # MOSTRA TEMPO DI GIOCO
+        playtime_text = $local.get_text("playtime") + ": "
         hour = save_data['total_sec'] / 60 / 60
         min = save_data['total_sec'] / 60 % 60
         sec = save_data['total_sec'] % 60
         time_string = sprintf("%02d:%02d:%02d", hour, min, sec)
-        pt_textsize = contents.text_size(PLAYTIME_TEXT).width
+        pt_textsize = contents.text_size(playtime_text).width
         ts_textsize = contents.text_size(time_string).width
         contents.font.color = system_color
         contents.draw_text(contents.width - ts_textsize - pt_textsize, 0,
-        pt_textsize, WLH, PLAYTIME_TEXT)
+        pt_textsize, WLH, playtime_text)
         contents.font.color = normal_color
         contents.draw_text(0, 0, contents.width, WLH, time_string, 2)
       end
       if DRAW_LOCATION
         # MOSTRA LOCAZIONE
-        lc_textsize = contents.text_size(LOCATION_TEXT).width
-        mn_textsize = contents.text_size(save_data['map_name']).width
+        location_text = $local.get_text("location") + ": "
+        lc_textsize = contents.text_size(location_text).width
+        mapname = $local.get_map_name(save_data['map_name'])
+        mn_textsize = contents.text_size(mapname).width
         contents.font.color = system_color
         contents.draw_text(0, 190, contents.width,
-        WLH, LOCATION_TEXT)
+        WLH, location_text)
         contents.font.color = normal_color
-        contents.draw_text(lc_textsize, 190, contents.width, WLH,
-        save_data['map_name'])
+        contents.draw_text(lc_textsize, 190, contents.width, WLH, mapname)
       end
         # MOSTRA FACCIA & Livello & Nome
         save_data['gamepar'].members.each_index do |i|
@@ -475,7 +475,7 @@ class Window_NSS_SlotDetail < Window_Base
         end
       end
     else
-      contents.draw_text(0,0, contents.width, contents.height - WLH, EMPTY_SLOT_TEXT, 1)
+      contents.draw_text(0,0, contents.width, contents.height - WLH, $local.get_text("empty"), 1)
     end
   end
   

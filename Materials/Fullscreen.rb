@@ -1,5 +1,5 @@
 module ADDON
-  ASK_LANGUAGE = $default_language == "" # if set to false it wont ask you and it'll go straight to fullscreen
+  ASK_LANGUAGE = $default_language == "en"
   TEXT = "Select your language:"
 end
 

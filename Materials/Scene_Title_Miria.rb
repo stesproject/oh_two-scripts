@@ -23,6 +23,7 @@
 #   CONFIG    #
 #############
 module MOG_VX01
+WEBSITE_URL = "https://stesproject.com"
 #Ativar tela cheia.    (true = Ativar ou false = Desativar) 
 FULL_SCREEN = false
 # Tempo de transição.
@@ -58,7 +59,11 @@ $mogscript["title_miria"] = true
 ###############
 module Cache
   def self.title(filename)
-    load_bitmap("Graphics/Title/", filename)
+    begin
+      load_bitmap("Graphics/Title/#{$lang}/", filename)
+    rescue
+      load_bitmap("Graphics/Title/", filename)
+    end
   end
 end
 #############
@@ -66,7 +71,8 @@ end
 #############
 $full_screen = 0
 class Scene_Title
-include  MOG_VX01
+  attr_accessor :title_commands
+  include  MOG_VX01
     def main
     if $BTEST                       
       battle_test                     
@@ -80,7 +86,7 @@ include  MOG_VX01
     $showm.call(13,0,2,0) 
     $showm.call(18,0,2,0)
     end     
-    start                         
+    start
     perform_transition          
     post_start                    
     Input.update                
@@ -95,6 +101,29 @@ include  MOG_VX01
     Graphics.freeze               
     terminate                     
   end
+
+  def initialize_commands
+    @title_commands = [
+      Vocab::new_game,
+      Vocab::continue,
+      $local.get_text("website"),
+      $local.get_text("menu_language"),
+      Vocab::shutdown
+    ]
+
+    if ($default_language != "")
+      @title_commands.delete_at(3)
+    end
+  end
+
+  def translate_db
+    localize_items($data_skills)
+    localize_items($data_items)
+    localize_items($data_weapons)
+    localize_items($data_armors)
+    localize_actors
+  end
+
   def start
     load_database                    
     create_game_objects            
@@ -104,7 +133,11 @@ include  MOG_VX01
     play_title_music                 
   end
   def perform_transition
-    Graphics.transition(TT , "Graphics/Title/Transition")
+    if $transition == true
+      Graphics.transition(TT , "Graphics/Title/Transition")
+    else
+      Graphics.transition(20)
+    end
   end
   def post_start
     open_command_window
@@ -116,17 +149,11 @@ include  MOG_VX01
     dispose_command_window
     snapshot_for_background
     dispose_title_graphic
+    $transition = false
   end
   def update
     @command_window.update
-     case @command_window.index
-     when 0
-     @com.bitmap = Cache.title("Com_01") 
-     when 1
-     @com.bitmap = Cache.title("Com_02")   
-     when 2
-     @com.bitmap = Cache.title("Com_03") 
-   end       
+    @com.bitmap = Cache.title("Com_0#{@command_window.index + 1}")    
     @sprite_title.opacity += 2
     @com.opacity += 2 if @sprite_title.opacity > 150
     @sprite.ox += TPLANE1_X
@@ -138,12 +165,26 @@ include  MOG_VX01
     @sprite_title.update if TWAVE == true
     if Input.trigger?(Input::C)
       case @command_window.index
-      when 0  
+      when 0    #New game
         command_new_game
-      when 1   
+      when 1    # Continue
         command_continue
-      when 2   
+      when @title_commands.size - 1    # Shutdown
         command_shutdown
+      when 2    # Website
+        command_website
+      when 3    # Language
+        # command_language
+      end
+    elsif Input.trigger?(Input::RIGHT)
+      case @command_window.index
+      when 3    # Language
+        command_language(1)
+      end
+    elsif Input.trigger?(Input::LEFT)
+      case @command_window.index
+      when 3    # Language
+        command_language(-1)
       end
     end
   end
@@ -240,17 +281,18 @@ include  MOG_VX01
     @com.dispose     
     @sprite_title.dispose
   end
-  def create_command_window
-    s1 = Vocab::new_game
-    s2 = Vocab::continue
-    s3 = Vocab::shutdown
-    @command_window = Window_Command.new(172, [s1, s2, s3])
+  def create_command_window(index = 1)
+    initialize_commands
+    @command_window = Window_Command.new(172, @title_commands)
     @command_window.opacity = 0
     @command_window.contents_opacity = 0
-    if @continue_enabled                  
-      @command_window.index = 1             
-    else                               
-      @command_window.draw_item(1, false)   
+    if @continue_enabled                    # If continue is enabled
+      @command_window.index = index         # Move cursor over command
+    else                                    # If disabled
+      @command_window.draw_item(1, false)   # Make command semi-transparent
+    end
+    if index != 1
+      @command_window.index = index
     end
   end
   def title_fade
@@ -306,7 +348,7 @@ include  MOG_VX01
   end
   def confirm_player_location
     if $data_system.start_map_id == 0
-      print "プレイヤーの初期位置が設定されていません。"
+      print "Player start location not set."
       exit
     end
   end
@@ -336,6 +378,18 @@ include  MOG_VX01
       Sound.play_buzzer
     end
   end
+  def command_website
+    Sound.play_decision
+    Thread.new {system("start #{MOG_VX01::WEBSITE_URL}")}
+  end
+  #--------------------------------------------------------------------------
+  # * Command: Language
+  #--------------------------------------------------------------------------
+  def command_language(value = 1)
+    Sound.play_decision
+    $local.switch_language(value)
+    localize_actors
+  end
   def command_shutdown    
     Sound.play_decision
     title_fade
@@ -360,4 +414,24 @@ include  MOG_VX01
     $game_temp.background_bitmap = Graphics.snap_to_bitmap
     $game_temp.background_bitmap.blur
   end
+  #--------------------------------------------------------------------------
+  # * Translate data from Database (items, weapons, armors, skills)
+  #--------------------------------------------------------------------------
+  def localize_items(items)
+    for i in 1...items.size
+      item_name = items[i].name
+      item_description = items[i].description
+      item = $local.get_db_object(item_name)
+      items[i].name = item.name
+      items[i].description = item.desc
+    end
   end
+  #--------------------------------------------------------------------------
+  # * Translate data from Database (actors, classes)
+  #--------------------------------------------------------------------------
+  def localize_actors
+    for i in 1...$data_classes.size
+      $data_classes[i].name = ""
+    end
+  end
+end

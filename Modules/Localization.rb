@@ -1,11 +1,21 @@
 #==============================================================================
 # Localization script
 # Author: Ste
+# Version: 2.0
 #==============================================================================
 class Localization
+  attr_accessor :msg_block
+  attr_accessor :words
+  attr_accessor :message_row
+
+  NEW_LINE_CHAR = "§"
+  ROW_LENGTH_MAX = 50
+  MESSAGES_MAX = 4
+  SPECIAL_CHARS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
+
   $default_language = ""
-  $msg_var = [61,62,63,64]
-  $param_var = 79
+  $msg_var = [91,92,93,94]
+  $param_var = 95
   @messages = nil
 
   LANG = ["en", "it", "es", "fr"]
@@ -17,27 +27,7 @@ class Localization
   }
 
   COMMON_INDEXES = {
-    "skill-electric-1" => 1,
-    "skill-electric-2" => 2,
-    "skill-ice-1" => 3,
-    "skill-ice-2" => 4,
-    "skill-fire-1" => 5,
-    "skill-fire-2" => 6,
-    "skill-magic-1" => 7,
-    "skill-magic-2" => 8,
-    "skill-all-1" => 9,
-    "skill-all-2" => 10,
-    "cannot-control" => 11,
-    "end-mission-1" => 12,
-    "end-mission-2" => 13,
-    "end-mission-3" => 14,
-    "door-closed" => 15,
-    "door-locked" => 16,
-    "gate-locked" => 17,
-    "door-sealed" => 18,
-    "controlled-enemy" => 19,
-    "no-weapon" => 20,
-    "no-dindini" => 21
+    "skill-electric-1" => 1
   }
 
   VOCABS_INDEXES = {
@@ -100,23 +90,22 @@ class Localization
   }
 
   MAPS_INDEXES = {
-    "King's Castle" => 1,
-    "Throne Room" => 2,
-    "Trophy Hall" => 3,
-    "Arena" => 4,
-    "Teorhemas Vault" => 5,
-    "Castle Grounds" => 6,
-    "Forest of the All-Eye Monster" => 7,
+    "Green Forest" => 1,
+    "Castle Grounds" => 2,
+    "Castle Dungeons" => 3,
+    "King's Castle" => 4,
+    "Throne Room" => 5,
+    "Teorhemas Vault" => 6,
+    "Arena" => 7,
     "Wild Valley" => 8,
-    "Mistery Cave" => 9,
-    "Water City" => 10,
-    "Finalboss Domain" => 11,
-    "Foxes Desert" => 12,
-    "Volcanic Depths" => 13,
-    "Eternal Glaciers" => 14,
-    "Dark Forest" => 15,
-    "Finalboss Castle" => 16,
-    "Celebration Feast" => 17
+    "Rocky Mountains" => 9,
+    "Dead Valley" => 10,
+    "Abyssal Waterfalls" => 11,
+    "Forest of the All-Eye Monster" => 12,
+    "Cyberspace" => 13,
+    "Kingdom Suburbs" => 14,
+    "Race" => 15,
+    "Ancient Ruins" => 16
   }
 
   DB_INDEXES = {
@@ -198,7 +187,7 @@ class Localization
       return
     end
 
-    for i in 0..3
+    for i in 0..@messages.size - 1
       @messages[i] = @messages[i] == nil ? "" : @messages[i]
       $game_variables[$msg_var[i]] = @messages[i]
     end
@@ -209,10 +198,10 @@ class Localization
 
     index = DB_INDEXES[name]
     line_data = index != nil ? $db_data[index] : name
-    data = split_data(line_data)
+    split_data(line_data)
 
-    text.name = data[0]
-    text.desc = data[1]
+    text.name = @messages[0]
+    text.desc = @messages[1]
 
     return text
   end
@@ -220,17 +209,17 @@ class Localization
   def get_map_name(name)
     index = MAPS_INDEXES[name]
     line_data = index != nil ? $map_names_data[index] : name
-    data = split_data(line_data)
+    split_data(line_data)
 
-    return data[0]
+    return @messages[0]
   end
 
   def get_text(name)
     index = VOCABS_INDEXES[name]
     line_data = index != nil ? $vocabs_data[index] : name
-    data = split_data(line_data)
+    split_data(line_data)
 
-    return data[0]
+    return @messages[0]
   end
 
   def set_msg(map_id, index)
@@ -238,10 +227,7 @@ class Localization
     map_id = map_id == nil ? $game_map.map_id : map_id
 
     line_data = $maps_data[map_id][index]
-    data = split_data(line_data)
-    for d in data
-      @messages.push(d)
-    end
+    split_data(line_data)
 
     set_msg_vars
   end
@@ -251,12 +237,13 @@ class Localization
 
     index = COMMON_INDEXES[name]
     line_data = $common_data[index]
-    data = split_data(line_data)
-    for d in data
-      @messages.push(d)
-    end
+    split_data(line_data)
 
-    set_msg_vars
+    if messages_exceed_max?
+      p "Messages are over the limit! (#{@messages.size}/#{MESSAGES_MAX})"
+    else
+      set_msg_vars
+    end
   end
 
   def set_action(action, item, value, item2 = nil, value2 = nil, item_data = nil)
@@ -360,6 +347,8 @@ class Localization
 
   def split_data(data)
     cells = []
+    @messages = []
+    reset_row
 
     if (data == nil)
       return []
@@ -370,15 +359,63 @@ class Localization
     end
 
     lang_id = LANG.index($lang)
-    msg_block = cells[lang_id]
-    blocks = []
-    if msg_block != nil
-      msg_block.split("§").each do |msg|
-        blocks.push(msg.to_s)
-      end
-    end
+    @msg_block = cells[lang_id]
 
-    return blocks
+    split_msg_block_in_rows
+  end
+  
+  def split_msg_block_in_rows
+    @words = @msg_block.split(" ")
+
+    @words.each do |word|
+      row = @message_row + word
+      if !row_length_max_reached?(row)
+        add_word_to_row(word)
+      end
+
+      if row_length_max_reached?(row) || is_last_word?(word)
+        @message_row = remove_n_chars_from(@message_row, 1)
+        add_row_to_messages
+        reset_row
+        add_word_to_row(word)
+      end
+      
+      if word.include? NEW_LINE_CHAR
+        @message_row = remove_n_chars_from(@message_row, 3)
+        add_row_to_messages
+        reset_row
+      end
+
+    end
+  end
+
+  def row_length_max_reached?(row)
+    return row.gsub(SPECIAL_CHARS) {}.size >= ROW_LENGTH_MAX
+  end
+
+  def add_word_to_row(word)
+    @message_row += "#{word} "
+  end
+
+  def is_last_word?(word)
+    return @words.last == word
+  end
+
+  def remove_n_chars_from(item, n = 1)
+    size = item.size
+    return item[0..size-(n+1)]
+  end
+
+  def add_row_to_messages
+    @messages.push(@message_row)
+  end
+
+  def reset_row
+    @message_row = ""
+  end
+
+  def messages_exceed_max?
+    return @messages.size > MESSAGES_MAX
   end
 
 end

@@ -491,7 +491,8 @@ class Window_Message < Window_Selectable
     #-----------------------
     @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
     @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
-    @text.gsub!(/\\N\[([0-9]+)\]/i) { "\x01{#{NMS_ACTOR_NAME_COLOR_ID}}" + $game_actors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
+    @text.gsub!(/\\N\[([0-9]+)\]/i) { $local.get_text($game_actors[$1.to_i].name).upcase }
+    # @text.gsub!(/\\N\[([0-9]+)\]/i) { "\x01{#{NMS_ACTOR_NAME_COLOR_ID}}" + $game_actors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     @text.gsub!(/\\C\[([0-9]+)\]/i) { "\x01{#{$1}}" }
     @text.gsub!(/\\G/i)              { "\x02" }
     @text.gsub!(/\\\./)             { "\x03" }

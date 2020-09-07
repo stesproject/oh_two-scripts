@@ -123,7 +123,6 @@ class Scene_Title
     localize_items($data_items)
     localize_items($data_weapons)
     localize_items($data_armors)
-    localize_actors
   end
 
   def start
@@ -390,7 +389,6 @@ class Scene_Title
   def command_language(value = 1)
     Sound.play_decision
     $local.switch_language(value)
-    localize_actors
   end
   def command_shutdown    
     Sound.play_decision
@@ -426,14 +424,6 @@ class Scene_Title
       item = $local.get_db_object(item_name)
       items[i].name = item.name
       items[i].description = item.desc
-    end
-  end
-  #--------------------------------------------------------------------------
-  # * Translate data from Database (actors, classes)
-  #--------------------------------------------------------------------------
-  def localize_actors
-    for i in 1...$data_classes.size
-      $data_classes[i].name = ""
     end
   end
 end

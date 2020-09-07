@@ -69,11 +69,7 @@ class Localization
     "exp_total" => 36,
     "website" => 37,
     "menu_language" => 38,
-    "back-king" => 39,
-    "go-back" => 40,
-    "defeat-monster" => 41,
-    "go-king" => 42,
-    "find-book" => 43,
+    "lv" => 39,
     "find" => 44,
     "gave" => 45,
     "got" => 46,
@@ -84,9 +80,9 @@ class Localization
     "the-m-pl" => 51,
     "the-f-pl" => 52,
     "Ourhero" => 53,
-    "class" => 54,
-    "skill-assigned" => 55,
-    "lv" => 56
+    "Tay" => 54,
+    "Fury" => 55,
+    "King" => 56
   }
 
   MAPS_INDEXES = {
@@ -109,51 +105,7 @@ class Localization
   }
 
   DB_INDEXES = {
-    "Meat" => 1,
-    "Regenerator" => 2,
-    "Small Bridge" => 3,
-    "key1" => 4,
-    "key2" => 5,
-    "key3" => 6,
-    "Book of the Forgotten Crafts" => 7,
-    "Controller Crystal" => 8,
-    "Bronze Medal" => 9,
-    "Silver Medal" => 10,
-    "Gold Medal" => 11,
-    "Secrets Sheet" => 12,
-    "Cute Monster" => 13,
-    "Revolt Sword" => 14,
-    "Assassin Blade" => 15,
-    "Soldier's Sword" => 16,
-    "Sabrelyzer" => 17,
-    "Gelizedor" => 18,
-    "Lollipop" => 19,
-    "Electric Sword" => 20,
-    "Revolt Sword II" => 21,
-    "Zombiesbane" => 22,
-    "Sword of the Legendary Hero" => 23,
-    "Electric Guitar" => 24,
-    "Icy Sword" => 25,
-    "Flaming Sword" => 26,
-    "Silver Slash" => 27,
-    "Katana" => 28,
-    "Final Revolt Sword" => 29,
-    "Dragon Sword" => 30,
-    "Finalboss Sword" => 31,
-    "Soul Eater" => 32,
-    "Copper Necklace" => 33,
-    "Bronze Necklace" => 34,
-    "Silver Necklace" => 35,
-    "Golden Necklace" => 36,
-    "Sword Case" => 37,
-    "Strength Necklace" => 38,
-    "Doubler Bracelet" => 39,
-    "Healing Bracelet" => 40,
-    "Rainbow Bracelets" => 41,
-    "Electric Shock" => 42,
-    "Icy Storm" => 43,
-    "Fire Bomb" => 44,
-    "Magic Attack" => 45
+    "Meat" => 1
   }
 
   class ItemText

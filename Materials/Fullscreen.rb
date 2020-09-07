@@ -1,5 +1,5 @@
 module ADDON
-  ASK_LANGUAGE = $default_language == "en"
+  ASK_LANGUAGE = $default_language == ""
   TEXT = "Select your language:"
 end
 

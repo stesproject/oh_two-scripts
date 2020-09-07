@@ -28,6 +28,8 @@ WEBSITE_URL = "https://stesproject.com"
 FULL_SCREEN = false
 # Tempo de transição.
 TT = 90
+# Fade in speed.
+FADE_IN_SPEED = 8
 #Ativar movimento de Onda no texto do titulo.
 # (true = Ativar ou false = Desativar) 
 TWAVE = true
@@ -154,8 +156,8 @@ class Scene_Title
   def update
     @command_window.update
     @com.bitmap = Cache.title("Com_0#{@command_window.index + 1}")    
-    @sprite_title.opacity += 2
-    @com.opacity += 2 if @sprite_title.opacity > 150
+    @sprite_title.opacity += FADE_IN_SPEED
+    @com.opacity += FADE_IN_SPEED if @sprite_title.opacity > 150
     @sprite.ox += TPLANE1_X
     @sprite.oy += TPLANE1_Y
     @sprite2.ox += TPLANE2_X

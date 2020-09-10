@@ -105,7 +105,10 @@ class Localization
   }
 
   DB_INDEXES = {
-    "Meat" => 1
+    "Meat" => 1,
+    "Egg" => 2,
+    "Health Potion" => 3,
+    "Red Globes" => 4,
   }
 
   class ItemText
@@ -177,11 +180,14 @@ class Localization
   def set_msg(map_id, index)
     reset_msg_vars
     map_id = map_id == nil ? $game_map.map_id : map_id
-
     line_data = $maps_data[map_id][index]
     split_data(line_data)
-
-    set_msg_vars
+    
+    if messages_exceed_max?
+      p "Messages are over the limit! (#{@messages.size}/#{MESSAGES_MAX})"
+    else
+      set_msg_vars
+    end
   end
 
   def set_common_msg(name)
@@ -198,7 +204,7 @@ class Localization
     end
   end
 
-  def set_action(action, item, value, item2 = nil, value2 = nil, item_data = nil)
+  def set_action(action, item, value, item2 = nil, value2 = nil, item_data = nil, code = "")
     reset_msg_vars
     
     text = get_text(action)
@@ -214,11 +220,11 @@ class Localization
     end
 
     amount = value > 0 ? value.to_s + " " : ""
-    @messages.push("#{amount}#{item}!")
+    @messages.push("#{code}#{amount}#{item}!")
 
     if (item2 != nil && value2 != nil)
       amount = value2 > 0 ? value2.to_s + " " : ""
-      @messages.push("#{amount}#{item2}!")
+      @messages.push("#{code}#{amount}#{item2}!")
     end
 
     $msg_params = ["normal", "bottom"]
@@ -230,48 +236,47 @@ class Localization
     reset_msg_vars
 
     text = get_text("act")
-    @messages.push(text)
 
     case index
     when 1
-      text = "#{get_text("the-m")} "
-      text += get_map_name("King's Castle")
+      text += " #{get_text("the-f")} "
+      text += get_map_name("Green Forest")
 
     when 2
-      text = "#{get_text("the-f")} "
-      text += get_map_name("Forest of the All-Eye Monster")
+      text += " #{get_text("the-m-pl")} "
+      text += get_map_name("Castle Dungeons")
 
     when 3
-      text = "#{get_text("the-f")} "
-      text += get_map_name("Wild Valley")
+      text += " #{get_text("the-f-pl")} "
+      text += get_map_name("Rocky Mountains")
 
     when 4
-      text = "#{get_text("the-f")} "
-      text += get_map_name("Water City")
+      text += " #{get_text("the-f")} "
+      text += get_map_name("Dead Valley")
 
     when 5
-      text = "#{get_text("the-m")} "
-      text += get_map_name("Foxes Desert")
+      text += " #{get_text("the-f-pl")} "
+      text += get_map_name("Abyssal Waterfalls")
 
     when 6
-      text = "#{get_text("the-f-pl")} "
-      text += get_map_name("Volcanic Depths")
+      text += " #{get_text("the-m")} "
+      text += get_map_name("Cyberspace")
 
     when 7
-      text = "#{get_text("the-m-pl")} "
-      text += get_map_name("Eternal Glaciers")
+      text += " #{get_text("the-f")} "
+      text += get_map_name("Kingdom Suburbs")
 
     when 8
-      text = "#{get_text("the-f")} "
-      text += get_map_name("Dark Forest")
+      text += " #{get_text("the-f-pl")} "
+      text += get_map_name("Ancient Ruins")
 
     when 9
-      text = "#{get_text("the-m")} "
-      text += get_map_name("Finalboss Castle")
+      text += " #{get_text("the-f")} "
+      text += get_map_name("Final Battle")
 
     end
 
-    @messages.push(text.upcase)
+    @messages.push(text)
 
     text = get_text("act-completed")
     @messages.push(text)

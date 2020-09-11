@@ -79,10 +79,11 @@ class Localization
     "the-f" => 50,
     "the-m-pl" => 51,
     "the-f-pl" => 52,
-    "Ourhero" => 53,
-    "Tay" => 54,
-    "Fury" => 55,
-    "King" => 56
+    "ourhero" => 53,
+    "tay" => 54,
+    "fury" => 55,
+    "king" => 56,
+    "sage" => 57
   }
 
   MAPS_INDEXES = {

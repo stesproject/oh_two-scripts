@@ -9,9 +9,10 @@ class Localization
   attr_accessor :message_row
 
   NEW_LINE_CHAR = "§"
-  ROW_LENGTH_MAX = 50
+  ROW_LENGTH_MAX = 52
   MESSAGES_MAX = 4
-  SPECIAL_CHARS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
+  SPECIAL_SYMBOLS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
+  SPECIAL_CHARS = /([àèìòùé])+/
 
   $default_language = ""
   $msg_var = [91,92,93,94]
@@ -337,6 +338,12 @@ class Localization
         reset_row
         add_word_to_row(word)
       end
+
+      if row_length_max_reached?(row) && is_last_word?(word)
+        @message_row = remove_n_chars_from(@message_row, 1)
+        add_row_to_messages
+        reset_row
+      end
       
       if word.include? NEW_LINE_CHAR
         @message_row = remove_n_chars_from(@message_row, 3)
@@ -348,7 +355,9 @@ class Localization
   end
 
   def row_length_max_reached?(row)
-    return row.gsub(SPECIAL_CHARS) {}.size >= ROW_LENGTH_MAX
+    row_cleaned = row.gsub(SPECIAL_SYMBOLS) {}
+    row_cleaned = row_cleaned.gsub(SPECIAL_CHARS) {"a"}
+    return row_cleaned.size >= ROW_LENGTH_MAX
   end
 
   def add_word_to_row(word)

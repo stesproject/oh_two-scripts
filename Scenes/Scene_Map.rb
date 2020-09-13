@@ -101,14 +101,15 @@ class Scene_Map < Scene_Base
   def update_transfer_player
     return unless $game_player.transfer?
     fade = (Graphics.brightness > 0)
-    fadeout(15) if fade
+    fade_speed = $transfer_speed ? $transfer_speed : 15
+    fadeout(fade_speed) if fade
     @spriteset.dispose              # Dispose of sprite set
     $game_player.perform_transfer   # Execute player transfer
     $game_map.autoplay              # Automatically switch BGM and BGS
     $game_map.update
-    Graphics.wait(10)
+    Graphics.wait((fade_speed * 2) / 3)
     @spriteset = Spriteset_Map.new  # Recreate sprite set
-    fadein(15) if fade
+    fadein(fade_speed) if fade
     Input.update
   end
   #--------------------------------------------------------------------------

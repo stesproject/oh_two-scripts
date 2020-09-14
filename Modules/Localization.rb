@@ -166,17 +166,17 @@ class Localization
   def get_map_name(name)
     index = MAPS_INDEXES[name]
     line_data = index != nil ? $map_names_data[index] : name
-    split_data(line_data)
+    split_data(line_data, false)
 
-    return @messages[0]
+    return @msg_block
   end
 
   def get_text(name)
     index = VOCABS_INDEXES[name]
     line_data = index != nil ? $vocabs_data[index] : name
-    split_data(line_data)
+    split_data(line_data, false)
 
-    return @messages[0]
+    return @msg_block
   end
 
   def set_msg(map_id, index)
@@ -304,7 +304,7 @@ class Localization
     set_msg_vars
   end
 
-  def split_data(data)
+  def split_data(data, split_in_rows = true)
     cells = []
     @messages = []
     reset_row
@@ -320,7 +320,9 @@ class Localization
     lang_id = LANG.index($lang)
     @msg_block = cells[lang_id]
 
-    split_msg_block_in_rows
+    if @msg_block != nil && split_in_rows == true
+      split_msg_block_in_rows
+    end
   end
   
   def split_msg_block_in_rows

@@ -150,6 +150,7 @@ class Scene_Title
     dispose_command_window
     snapshot_for_background
     dispose_title_graphic
+    translate_db
     $transition = false
   end
   def update

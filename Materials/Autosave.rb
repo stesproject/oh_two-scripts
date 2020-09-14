@@ -471,7 +471,7 @@ class Window_NSS_SlotDetail < Window_Base
         if DRAW_NAME
           # Draw Name
           contents.draw_text(face_x_base, face_y_base + 2 + 80 + lvn_y_plus - 6, 84,
-          WLH, actor.name, 1)
+          WLH, $local.get_text(actor.name), 1)
         end
       end
     else

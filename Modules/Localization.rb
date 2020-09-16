@@ -12,7 +12,7 @@ class Localization
   ROW_LENGTH_MAX = 52
   MESSAGES_MAX = 4
   SPECIAL_SYMBOLS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
-  SPECIAL_CHARS = /([àèìòùé])+/
+  SPECIAL_CHARS = /([àèìòùéÈ])+/
 
   $default_language = ""
   $msg_var = [91,92,93,94]
@@ -28,7 +28,9 @@ class Localization
   }
 
   COMMON_INDEXES = {
-    "skill-electric-1" => 1
+    "cant_control" => 1,
+    "no_item" => 2,
+    "tay_can_control" => 3
   }
 
   VOCABS_INDEXES = {
@@ -71,6 +73,10 @@ class Localization
     "website" => 37,
     "menu_language" => 38,
     "lv" => 39,
+    "use_item" => 40,
+    "a-lot" => 41,
+    "using" => 42,
+    "view" => 43,
     "find" => 44,
     "gave" => 45,
     "got" => 46,
@@ -111,6 +117,14 @@ class Localization
     "Egg" => 2,
     "Health Potion" => 3,
     "Red Globes" => 4,
+    "Pebbles" => 5,
+    "Ingots" => 6,
+    "King's Key" => 7,
+    "Silver Key" => 8,
+    "Controller Crystal" => 9,
+    "Obelisk Key" => 10,
+    "Regenerator" => 11,
+    "Controls" => 12
   }
 
   class ItemText
@@ -155,6 +169,7 @@ class Localization
 
     index = DB_INDEXES[name]
     line_data = index != nil ? $db_data[index] : name
+    reset_msg_vars
     split_data(line_data)
 
     text.name = @messages[0]
@@ -304,9 +319,20 @@ class Localization
     set_msg_vars
   end
 
+  def set_item_details(item_name, n)
+    reset_msg_vars
+
+    msg = "\\lbl#{item_name.upcase}: #{n} #{get_text("possession")}.\\lbl"
+
+    @messages.push(msg)
+    @messages.push(get_text("use_item"))
+    @messages.push(get_text("cancel"))
+
+    set_msg_vars
+  end
+
   def split_data(data, split_in_rows = true)
     cells = []
-    @messages = []
     reset_row
 
     if (data == nil)

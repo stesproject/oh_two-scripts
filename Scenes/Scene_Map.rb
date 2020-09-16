@@ -101,7 +101,7 @@ class Scene_Map < Scene_Base
   def update_transfer_player
     return unless $game_player.transfer?
     fade = (Graphics.brightness > 0)
-    fade_speed = $transfer_speed ? $transfer_speed : 15
+    fade_speed = $transfer_speed && $transfer_speed != nil ? $transfer_speed : 15
     fadeout(fade_speed) if fade
     @spriteset.dispose              # Dispose of sprite set
     $game_player.perform_transfer   # Execute player transfer

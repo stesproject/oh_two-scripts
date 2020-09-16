@@ -110,16 +110,16 @@ class Window_Base
   
   # I vari colori usati per scrivere
   # (nell'angolo in basso a destra della windowskin)
-  NMS_MAP_NAME_COLOR_ID = 4
-  NMS_CLASS_NAME_COLOR_ID = 12
-  NMS_ACTOR_NAME_COLOR_ID = 3
-  NMS_MONSTER_NAME_COLOR_ID = 10
-  NMS_TROOP_NAME_COLOR_ID = 11
-  NMS_ITEM_NAME_COLOR_ID = 5
-  NMS_WEAPON_NAME_COLOR_ID = 10
-  NMS_ARMOR_NAME_COLOR_ID = 4
-  NMS_SKILL_NAME_COLOR_ID = 2
-  NMS_ITEM_PRICE_COLOR_ID = 2
+  NMS_MAP_NAME_COLOR_ID = 0
+  NMS_CLASS_NAME_COLOR_ID = 0
+  NMS_ACTOR_NAME_COLOR_ID = 0
+  NMS_MONSTER_NAME_COLOR_ID = 0
+  NMS_TROOP_NAME_COLOR_ID = 0
+  NMS_ITEM_NAME_COLOR_ID = 0
+  NMS_WEAPON_NAME_COLOR_ID = 0
+  NMS_ARMOR_NAME_COLOR_ID = 0
+  NMS_SKILL_NAME_COLOR_ID = 0
+  NMS_ITEM_PRICE_COLOR_ID = 0
   
   NMS_DELAY_PER_LETTER = 0 # tempo tra le lettere durante il LETTERAxLETTERA
   # il tempo è in frame
@@ -537,7 +537,7 @@ class Window_Message < Window_Selectable
     # Woratana's :: Item Name
     @text.gsub!(/\\NI\[([0-9]+)\]/i) { "\x01{#{NMS_ITEM_NAME_COLOR_ID}}" + $data_items[$1.to_i].name + "\x01{#{@nms.last_color}}"}
     # Woratana's :: Weapon Name
-    @text.gsub!(/\\NW\[([0-9]+)\]/i) { "\x01{#{NMS_WEAPON_NAME_COLOR_ID}}" + $data_weapons[$1.to_i].name + "\x01{#{@nms.last_color}}" }
+    @text.gsub!(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Armor Name
     @text.gsub!(/\\NA\[([0-9]+)\]/i) { "\x01{#{NMS_ARMOR_NAME_COLOR_ID}}" + $data_armors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Skill Name

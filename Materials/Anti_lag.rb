@@ -1,37 +1,37 @@
-################
+###############
 
-#AntiLag
+# AntiLag
 
-################
+###############
 
-# module AntiLag
+module AntiLag
 
-#   SPC = Win32API.new("kernel32", "SetPriorityClass", "pi", "i")
+  SPC = Win32API.new("kernel32", "SetPriorityClass", "pi", "i")
 
-#   @@high_priority = false
+  @@high_priority = false
 
-#   def self.high_priority ; @@high_priority; end
+  def self.high_priority ; @@high_priority; end
 
-#   def self.high_priority?; @@high_priority; end
+  def self.high_priority?; @@high_priority; end
 
-#   def self.high_priority=(valor)
+  def self.high_priority=(valor)
 
-#     return if @@high_priority == valor
+    return if @@high_priority == valor
 
-#     @@high_priority = valor
+    @@high_priority = valor
 
-#     if @@high_priority
+    if @@high_priority
 
-#       SPC.call(-1, 0x80)
+      SPC.call(-1, 0x80)
 
-#       return
+      return
 
-#     end
+    end
 
-#     SPC.call(-1, 0x20)
+    SPC.call(-1, 0x20)
 
-#   end
+  end
 
-# end
+end
 
-# AntiLag.high_priority = true
+AntiLag.high_priority = true

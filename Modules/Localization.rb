@@ -30,7 +30,8 @@ class Localization
   COMMON_INDEXES = {
     "cant_control" => 1,
     "no_item" => 2,
-    "tay_can_control" => 3
+    "tay_can_control" => 3,
+    "swordcase" => 4
   }
 
   VOCABS_INDEXES = {
@@ -124,7 +125,31 @@ class Localization
     "Controller Crystal" => 9,
     "Obelisk Key" => 10,
     "Regenerator" => 11,
-    "Controls" => 12
+    "Controls" => 12,
+    "Spada Dorata" => 13,
+    "Spada Antica" => 14,
+    "Spada di Pietra" => 15,
+    "Spada del Soldato" => 16,
+    "AmmazzaZombie" => 17,
+    "Spada della Rivolta" => 18,
+    "Spada della Rivolta 2" => 19,
+    "Gladiator" => 20,
+    "Gladius" => 21,
+    "Gladius Perfezionato" => 22,
+    "Spada di Fuoco" => 23,
+    "Spada di Carbone" => 24,
+    "Spada Lucente" => 25,
+    "Spada di Platino" => 26,
+    "Spada della Rivolta Finale" => 27,
+    "Spada Spirituale" => 28,
+    "Gelizedor" => 29,
+    "Spada Cannone" => 30,
+    "Spada di Ghiaccio" => 31,
+    "Spada Infernale" => 32,
+    "Spada d'Argento" => 33,
+    "Elettrogen" => 34,
+    "Spada del Drago" => 35,
+    "Ultimate Sword" => 36
   }
 
   class ItemText

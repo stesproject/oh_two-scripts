@@ -10,6 +10,7 @@
 #   Set to switch id "1" by default.
 
 NO_MOVE_EVENTS_SWITCH_ID = 412
+NOT_SAVE_POSITION_MAPS = [2, 10, 16, 30, 101, 3, 4]
 
 class Game_System
 
@@ -45,10 +46,11 @@ end
 class Game_Map 
 
   alias :eds_old_pre_mem_setup :setup
-  def setup(map_id)     
+  def setup(map_id)
+    skip = NOT_SAVE_POSITION_MAPS.include?(map_id)
     save_positions unless $game_switches[NO_MOVE_EVENTS_SWITCH_ID]
     eds_old_pre_mem_setup(map_id)    
-    restore_positions unless $game_switches[NO_MOVE_EVENTS_SWITCH_ID]
+    restore_positions unless $game_switches[NO_MOVE_EVENTS_SWITCH_ID] || skip
   end
 
   def save_positions

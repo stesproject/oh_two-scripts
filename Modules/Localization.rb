@@ -31,7 +31,12 @@ class Localization
     "cant_control" => 1,
     "no_item" => 2,
     "tay_can_control" => 3,
-    "swordcase" => 4
+    "swordcase" => 4,
+    "already_equipped" => 5,
+    "to_upgrade" => 6,
+    "already_upgrading" => 7,
+    "press_to_upgrade" => 8,
+    "not_enough_globes" => 9
   }
 
   VOCABS_INDEXES = {
@@ -57,14 +62,9 @@ class Localization
     "item" => 20,
     "equip" => 21,
     "level" => 22,
-    "hp" => 23,
-    "mp" => 24,
-    "atk" => 25,
-    "weapon" => 26,
-    "armor1" => 27,
-    "armor2" => 28,
-    "armor3" => 29,
-    "armor4" => 30,
+    "remove" => 23,
+    "upgrade_weap" => 24,
+    "proceed" => 25,
     "attack" => 31,
     "skill" => 32,
     "guard" => 33,
@@ -331,15 +331,36 @@ class Localization
   def set_weapon_stats(index)
     reset_msg_vars
 
+    SWORDS_CAN_UPGRADE = [2,7,8,10,12,13,18]
     weapon = $data_weapons[index]
-    @messages.push("\\c[14]#{weapon.name.upcase}")
 
-    text = get_text("attack")
-    @messages.push("#{text}: #{weapon.atk}")
-    text = get_text("guard")
-    @messages.push("#{text}: #{weapon.def}")
+    equipped_sword_atk = $game_variables[85]
+    diff = weapon.atk - equipped_sword_atk
 
-    $msg_params = ["dark", "middle"]
+    diff_text = ""
+    if diff < 0 
+      # selected sword is worst than the one equipped
+      diff_text = "\\c[8](#{diff})"
+    elsif diff > 0
+      # selected sword is better than the one equipped
+      diff_text = "\\c[11](+#{diff})"
+    elsif diff == 0
+      # selected sword and the one equipped are equal
+    end
+
+    atk = get_text("attack")
+    msg = "#{weapon.name.upcase} \\c[3]#{atk}: #{weapon.atk} #{diff_text}"
+    @messages.push(msg)
+
+    if SWORDS_CAN_UPGRADE.include?(index)
+      $game_variables[87] = weapon.note.to_i # Set the Red Globes needed to upgrade the weapon
+      @messages.push(get_text("equip"))
+      @messages.push(get_text("upgrade_weap"))
+      @messages.push(get_text("cancel"))
+    else
+      @messages.push(get_text("equip"))
+      @messages.push(get_text("cancel"))
+    end
 
     set_msg_vars
   end

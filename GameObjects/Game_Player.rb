@@ -11,6 +11,7 @@ class Game_Player < Game_Character
   #--------------------------------------------------------------------------
   CENTER_X = (544 / 2 - 16) * 8     # Screen center X coordinate * 8
   CENTER_Y = (416 / 2 - 16) * 8     # Screen center Y coordinate * 8
+  BLOCK_MOVEMENTS_SWITCH = 420
   #--------------------------------------------------------------------------
   # * Public Instance Variables
   #--------------------------------------------------------------------------
@@ -303,6 +304,7 @@ class Game_Player < Game_Character
   def move_by_input
     return unless movable?
     return if $game_map.interpreter.running?
+    return if $game_switches[BLOCK_MOVEMENTS_SWITCH] == true
     case Input.dir4
     when 2;  move_down
     when 4;  move_left

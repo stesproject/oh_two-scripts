@@ -36,8 +36,8 @@ class Localization
     "swordcase" => 4,
     "already_equipped" => 5,
     "to_upgrade" => 6,
-    "press_to_upgrade" => 8,
-    "not_enough_globes" => 9
+    "press_to_upgrade" => 7,
+    "not_enough_globes" => 8
   }
 
   VOCABS_INDEXES = {
@@ -67,6 +67,9 @@ class Localization
     "upgrade_weap" => 24,
     "proceed" => 25,
     "obtain" => 26,
+    "stats" => 27,
+    "skins" => 28,
+    "trophy-hall" => 29,
     "attack" => 31,
     "skill" => 32,
     "guard" => 33,
@@ -93,7 +96,8 @@ class Localization
     "tay" => 54,
     "fury" => 55,
     "king" => 56,
-    "sage" => 57
+    "sage" => 57,
+    "general" => 58
   }
 
   MAPS_INDEXES = {

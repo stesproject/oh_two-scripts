@@ -1120,8 +1120,10 @@ class Game_Interpreter
     if $game_message.visible
       return false
     else
-      screen.start_fadeout(30)
-      @wait_count = 30
+      fade_speed = $fade_speed ? $fade_speed : 30
+      screen.start_fadeout(fade_speed)
+      @wait_count = fade_speed
+      $fade_speed = 30
       return true
     end
   end
@@ -1132,8 +1134,10 @@ class Game_Interpreter
     if $game_message.visible
       return false
     else
-      screen.start_fadein(30)
-      @wait_count = 30
+      fade_speed = $fade_speed ? $fade_speed : 30
+      screen.start_fadein(fade_speed)
+      @wait_count = fade_speed
+      $fade_speed = 30
       return true
     end
   end

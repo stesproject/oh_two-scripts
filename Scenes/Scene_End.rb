@@ -39,7 +39,7 @@ class Scene_End < Scene_Base
   # * Return to Original Screen
   #--------------------------------------------------------------------------
   def return_scene
-    $scene = Scene_Menu.new(5)
+    $scene = Scene_Map.new
   end
   #--------------------------------------------------------------------------
   # * Frame Update

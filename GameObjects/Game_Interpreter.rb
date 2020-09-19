@@ -699,6 +699,7 @@ class Game_Interpreter
   def command_117
     common_event = $data_common_events[@params[0]]
     if common_event != nil
+      $calling_event = @event_id
       @child_interpreter = Game_Interpreter.new(@depth + 1)
       @child_interpreter.setup(common_event.list, @event_id)
     end

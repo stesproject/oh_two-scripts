@@ -8,6 +8,8 @@ class Localization
   attr_accessor :words
   attr_accessor :message_row
 
+  SWORDS_CAN_UPGRADE = [2,7,8,10,12,13,18,22]
+
   NEW_LINE_CHAR = "§"
   ROW_LENGTH_MAX = 52
   MESSAGES_MAX = 4
@@ -34,7 +36,6 @@ class Localization
     "swordcase" => 4,
     "already_equipped" => 5,
     "to_upgrade" => 6,
-    "already_upgrading" => 7,
     "press_to_upgrade" => 8,
     "not_enough_globes" => 9
   }
@@ -65,6 +66,7 @@ class Localization
     "remove" => 23,
     "upgrade_weap" => 24,
     "proceed" => 25,
+    "obtain" => 26,
     "attack" => 31,
     "skill" => 32,
     "guard" => 33,
@@ -331,7 +333,6 @@ class Localization
   def set_weapon_stats(index)
     reset_msg_vars
 
-    SWORDS_CAN_UPGRADE = [2,7,8,10,12,13,18]
     weapon = $data_weapons[index]
 
     equipped_sword_atk = $game_variables[85]
@@ -353,9 +354,13 @@ class Localization
     @messages.push(msg)
 
     if SWORDS_CAN_UPGRADE.include?(index)
-      $game_variables[87] = weapon.note.to_i # Set the Red Globes needed to upgrade the weapon
+      upgrade_data = weapon.note.split("/")
+      $game_variables[87] = upgrade_data[0].to_i # Red Globes needed to upgrade the weapon
+      $game_variables[98] = upgrade_data[1].to_i # Counter value (determines the process speed)
+      msg = "\\c[10]#{get_text("upgrade_weap")}\\c[15]"
+
       @messages.push(get_text("equip"))
-      @messages.push(get_text("upgrade_weap"))
+      @messages.push(msg)
       @messages.push(get_text("cancel"))
     else
       @messages.push(get_text("equip"))

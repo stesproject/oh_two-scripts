@@ -5,6 +5,9 @@
 # Para criar a barra de HP dos Bosses, ponha no evento inimigo o comentário: Boss
 
 module Enemy_Hud
+  #------------------------------------------------------------------------------
+  Skip_Check_Maps = [2,10,16,30,101,3,4]
+  #------------------------------------------------------------------------------
   Base = "Boss-Base" # Imagem de fundo da barra de HP do boss
   HP_Bar = "Boss-HPBar" # Imagem da barra de HP do boss
   Bar_X = 4 # Posição X da barra de HP
@@ -75,12 +78,15 @@ class Scene_Map < Scene_Base
   alias boss_hud_update_transfer_player update_transfer_player
   def update
     super
-    for event in $game_map.events.values
-      if event.boss == true
-        @boss_hud = Boss_HUD.new(event.id) if @boss_hud == nil and !event.enemy_called.dead?
-        @boss_hud.update if @boss_hud != nil and !event.enemy_called.dead?
-        @boss_hud.dispose if @boss_hud != nil and event.enemy_called.dead?
-        @boss_hud = nil if @boss_hud != nil and event.enemy_called.dead?
+    skip = Enemy_Hud::Skip_Check_Maps.include?($game_map.map_id)
+    if skip == false
+      for event in $game_map.events.values
+        if event.boss == true
+          @boss_hud = Boss_HUD.new(event.id) if @boss_hud == nil and !event.enemy_called.dead?
+          @boss_hud.update if @boss_hud != nil and !event.enemy_called.dead?
+          @boss_hud.dispose if @boss_hud != nil and event.enemy_called.dead?
+          @boss_hud = nil if @boss_hud != nil and event.enemy_called.dead?
+        end
       end
     end
     boss_hud_update

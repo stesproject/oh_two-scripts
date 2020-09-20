@@ -211,6 +211,8 @@ class Window_Base
     "middle"   => 1,
     "top"      => 0
   }
+
+  NO_ITALIC_MAPS = [2,10,30]
   
   #---------------------------------
   # [END] SETUP SCRIPT PART
@@ -460,8 +462,15 @@ class Window_Message < Window_Selectable
     @show_fast = false
     @line_show_fast = false
     @pause_skip = false
-    contents.font.color = text_color(0)
+    reset_font_styles
     @contents_x += CHOICE_INPUT_X_PLUS if $game_message.choice_max > 00
+  end
+
+  def reset_font_styles
+    contents.font.color = text_color(0)
+    contents.font.shadow = Font.default_shadow
+    contents.font.italic = NO_ITALIC_MAPS.include?($game_map.map_id) ? false : Font.default_italic
+    contents.font.bold = Font.default_bold
   end
   #--------------------------------------------------------------------------
   # ● EDITED
@@ -690,6 +699,7 @@ class Window_Message < Window_Selectable
         @text.sub!(/\{([0-9]+)\}/, "")
         @nms.last_color = $1.to_i
         contents.font.color = text_color($1.to_i)
+        contents.font.shadow = $1.to_i != 15
         next
       when "\x02"
         @gold_window.refresh

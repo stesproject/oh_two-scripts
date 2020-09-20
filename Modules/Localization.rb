@@ -61,7 +61,7 @@ class Localization
     "to_title" => 18,
     "save" => 19,
     "item" => 20,
-    "equip" => 21,
+    "equipment" => 21,
     "level" => 22,
     "remove" => 23,
     "upgrade_weap" => 24,
@@ -70,6 +70,7 @@ class Localization
     "stats" => 27,
     "skins" => 28,
     "trophy-hall" => 29,
+    "equip" => 30,
     "attack" => 31,
     "skill" => 32,
     "guard" => 33,
@@ -365,11 +366,10 @@ class Localization
 
       @messages.push(get_text("equip"))
       @messages.push(msg)
-      @messages.push(get_text("cancel"))
     else
       @messages.push(get_text("equip"))
-      @messages.push(get_text("cancel"))
     end
+    @messages.push("#{get_text("cancel")}")
 
     set_msg_vars
   end

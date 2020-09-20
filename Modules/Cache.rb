@@ -53,6 +53,13 @@ module Cache
     load_bitmap("Graphics/Pictures/", filename)
   end
   #--------------------------------------------------------------------------
+  # * Get Picture Graphic Localized
+  #     filename : Filename
+  #--------------------------------------------------------------------------
+  def self.picture_loc(filename)
+    load_bitmap("Graphics/Pictures/#{$lang}/", filename)
+  end
+  #--------------------------------------------------------------------------
   # * Get System Graphic
   #     filename : Filename
   #--------------------------------------------------------------------------

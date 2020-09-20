@@ -33,7 +33,11 @@ class Sprite_Picture < Sprite
     if @picture_name != @picture.name
       @picture_name = @picture.name
       if @picture_name != ""
-        self.bitmap = Cache.picture(@picture_name)
+        begin
+          self.bitmap = Cache.picture_loc(@picture_name)
+        rescue
+          self.bitmap = Cache.picture(@picture_name)
+        end
       end
     end
     if @picture_name == ""

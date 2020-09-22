@@ -131,7 +131,8 @@ class Scene_Title
     check_continue                    
     create_title_graphic             
     create_command_window         
-    play_title_music                 
+    play_title_music     
+    Vars_Initialization.new
   end
   def perform_transition
     if $transition == true

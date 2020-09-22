@@ -247,5 +247,6 @@ class Scene_File < Scene_Base
       $game_map.setup($game_map.map_id)
       $game_player.center($game_player.x, $game_player.y)
     end
+    Vars_Initialization.new
   end
 end

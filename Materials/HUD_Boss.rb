@@ -12,6 +12,8 @@ module Enemy_Hud
   HP_Bar = "Boss-HPBar" # Imagem da barra de HP do boss
   Bar_X = 4 # Posição X da barra de HP
   Bar_Y = 6 # Posição Y da barra de HP
+  Face_X = 83
+  Face_Y = 353
 end
 
 #==============================================================================
@@ -40,6 +42,7 @@ class Boss_HUD < Sprite
     @enemy = $game_map.events[id]
     super()
     self.bitmap = Bitmap.new(544,416)
+    self.z = 99
   end
   def update
     self.bitmap.clear
@@ -53,19 +56,29 @@ if $game_switches[417] == true
   end
   def show_bar(x,y,hp,max)
     base = Cache.system(Enemy_Hud::Base)
+    bars_x = (544-base.width)/2
+    bars_y = (416-base.height)-24
     cw2 = base.width
     ch2 = base.height
-    rect2 = Rect.new(0, 0, cw2, ch2)
+    # rect2 = Rect.new(0, 0, cw2, ch2)
     src_rect2 = Rect.new(0, 0, cw2, ch2)
-    self.bitmap.stretch_blt(rect2, base, src_rect2)
+    self.bitmap.blt(bars_x, bars_y, base, src_rect2)
+    # self.bitmap.stretch_blt(rect2, base, src_rect2)
     meter = Cache.system(Enemy_Hud::HP_Bar)
     cw1 = meter.width * hp / max
     ch1 = meter.height
-    rect1 = Rect.new(x, y, cw1, ch1)
+    # rect1 = Rect.new(x, y, cw1, ch1)
     src_rect1 = Rect.new(0, 0, cw1, ch1)
-    self.bitmap.stretch_blt(rect1, meter, src_rect1)
-    self.x = (544-base.width)/2
-    self.y = (416-base.height)-24
+    self.bitmap.blt(bars_x + x, bars_y + y, meter, src_rect1)
+    # self.bitmap.stretch_blt(rect1, meter, src_rect1)
+    # self.x = (544-base.width)/2
+    # self.y = (416-base.height)-24
+
+    face = Cache.picture("boss#{$game_variables[101] + 1}")
+    cw3 = face.width
+    ch3 = face.height
+    src_rect3 = Rect.new(0, 0, cw3, ch3)
+    self.bitmap.blt(Enemy_Hud::Face_X, Enemy_Hud::Face_Y, face, src_rect3)
   end
 end
 

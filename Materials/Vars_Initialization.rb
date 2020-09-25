@@ -1,7 +1,7 @@
 class Vars_Initialization
   def initialize
-    # boss hud
-    $game_variables[99] = 83
-    $game_variables[100] = 353
+    # menu: hero names
+    $game_variables[99] = 255
+    $game_variables[100] = 47
   end
 end

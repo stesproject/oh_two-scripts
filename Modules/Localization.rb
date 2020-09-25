@@ -115,7 +115,7 @@ class Localization
     "Abyssal Waterfalls" => 11,
     "Forest of the All-Eye Monster" => 12,
     "Cyberspace" => 13,
-    "Kingdom Suburbs" => 14,
+    "Kingdom Outskirts" => 14,
     "Race" => 15,
     "Ancient Ruins" => 16
   }
@@ -313,7 +313,7 @@ class Localization
 
     when 7
       text += " #{get_text("the-f")} "
-      text += get_map_name("Kingdom Suburbs")
+      text += get_map_name("Kingdom Outskirts")
 
     when 8
       text += " #{get_text("the-f-pl")} "

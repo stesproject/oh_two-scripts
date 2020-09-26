@@ -288,7 +288,9 @@ class Localization
   def set_act_completed(index)
     reset_msg_vars
 
-    text = get_text("act")
+    text = "\\DELAY[3]" # Set letter x letter delay
+    text += get_text("act")
+    text += "\\.\\."
 
     case index
     when 1
@@ -329,9 +331,11 @@ class Localization
 
     end
 
+    text += "\\.\\."
     @messages.push(text)
 
     text = get_text("act-completed")
+    text += "\\RED" # Reset letter x letter delay
     @messages.push(text)
 
     $msg_params = ["transparent", "middle"]
@@ -406,8 +410,14 @@ class Localization
     @msg_block = cells[lang_id]
 
     if @msg_block != nil && split_in_rows == true
+      convert_special_characters
       split_msg_block_in_rows
     end
+  end
+
+  def convert_special_characters
+    @msg_block = @msg_block.gsub(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
+    @msg_block = @msg_block.gsub(/\\N\[([0-9]+)\]/i) { get_text($game_actors[$1.to_i].name) }
   end
   
   def split_msg_block_in_rows

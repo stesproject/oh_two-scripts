@@ -546,7 +546,7 @@ class Window_Message < Window_Selectable
     # Woratana's :: Item Name
     @text.gsub!(/\\NI\[([0-9]+)\]/i) { "\x01{#{NMS_ITEM_NAME_COLOR_ID}}" + $data_items[$1.to_i].name + "\x01{#{@nms.last_color}}"}
     # Woratana's :: Weapon Name
-    @text.gsub!(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name + "\x01{#{@nms.last_color}}" }
+    @text.gsub!(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
     # Woratana's :: Armor Name
     @text.gsub!(/\\NA\[([0-9]+)\]/i) { "\x01{#{NMS_ARMOR_NAME_COLOR_ID}}" + $data_armors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Skill Name

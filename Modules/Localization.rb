@@ -226,6 +226,15 @@ class Localization
     return @msg_block
   end
 
+  def get_plural(item_data)
+    plurals = []
+    item_data.note.split(/\r?\n/).each do |text|
+      plurals.push(text)
+    end
+
+    return plurals[LANG.index($lang)]
+  end
+
   def set_msg(map_id, index)
     reset_msg_vars
     map_id = map_id == nil ? $game_map.map_id : map_id
@@ -260,12 +269,7 @@ class Localization
     @messages.push(text)
 
     if (item_data != nil && item_data.note != "" && value > 1)
-      plurals = []
-      item_data.note.split(/\r?\n/).each do |text|
-        plurals.push(text)
-      end
-
-      item = plurals[LANG.index($lang)]
+      item = get_plural(item_data)
     end
 
     amount = value > 0 ? value.to_s + " " : ""

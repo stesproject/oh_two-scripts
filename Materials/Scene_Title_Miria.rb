@@ -269,7 +269,7 @@ class Scene_Title
     @com.opacity = 0
     @com.blend_type = 2
     @options = Sprite.new
-    @options.bitmap = Cache.title("Options")  
+    @options.bitmap = Cache.title("Options")
     @options.opacity = 0
     @container = Sprite.new
     @container.bitmap = Cache.title("Container")
@@ -439,6 +439,7 @@ class Scene_Title
   def command_language(value = 1)
     Sound.play_decision
     $local.switch_language(value)
+    @options.bitmap = Cache.title("Options")
   end
   def command_shutdown    
     Sound.play_decision

@@ -23,13 +23,15 @@
 #   CONFIG    #
 #############
 module MOG_VX01
-WEBSITE_URL = "https://stesproject.com"
+# WEBSITE_URL = "https://stesproject.com"
+WEBSITE_URL = "https://store.steampowered.com/app/847560/Our_Hero_First/"
 #Ativar tela cheia.    (true = Ativar ou false = Desativar) 
 FULL_SCREEN = false
 # Tempo de transição.
 TT = 90
 # Fade in speed.
 FADE_IN_SPEED = 8
+FADE_OUT_SPEED = 3
 #Ativar movimento de Onda no texto do titulo.
 # (true = Ativar ou false = Desativar) 
 TWAVE = true
@@ -51,6 +53,15 @@ TPLANE2_Y = 0
 TPLANE3_X = 5
 # Velocidade de movimento da camada 2 na vertical.
 TPLANE3_Y = 0
+
+OPTIONS_X = 339
+OPTIONS_Y = 205
+
+CONTAINER_X = 324
+CONTAINER_Y = 189
+
+CURSOR_X = 482
+CURSOR_Y = 213
 end
 #-------------------------------------------------
 $mogscript = {} if $mogscript == nil
@@ -155,9 +166,14 @@ class Scene_Title
   end
   def update
     @command_window.update
-    @com.bitmap = Cache.title("Com_0#{@command_window.index + 1}")    
+    # @com.bitmap = Cache.title("Com_0#{@command_window.index + 1}")
+    @com.y = (@command_window.index * 35) + OPTIONS_Y
+    @cursor.y = (@command_window.index * 35) + CURSOR_Y
     @sprite_title.opacity += FADE_IN_SPEED
     @com.opacity += FADE_IN_SPEED if @sprite_title.opacity > 150
+    @options.opacity += FADE_IN_SPEED if @sprite_title.opacity > 150
+    @container.opacity += FADE_IN_SPEED if @sprite_title.opacity > 150
+    @cursor.opacity += FADE_IN_SPEED if @sprite_title.opacity > 150
     @sprite.ox += TPLANE1_X
     @sprite.oy += TPLANE1_Y
     @sprite2.ox += TPLANE2_X
@@ -246,11 +262,21 @@ class Scene_Title
   end
   def create_title_graphic
     @sprite_title = Sprite.new    
-    @sprite_title.bitmap = Cache.title("Title")  
+    @sprite_title.bitmap = Cache.picture("Title")  
     @sprite_title.opacity = 0
     @com = Sprite.new
-    @com.bitmap = Cache.title("Com_01")  
+    @com.bitmap = Cache.title("Com_00")  
     @com.opacity = 0
+    @com.blend_type = 2
+    @options = Sprite.new
+    @options.bitmap = Cache.title("Options")  
+    @options.opacity = 0
+    @container = Sprite.new
+    @container.bitmap = Cache.title("Container")
+    @container.opacity = 0
+    @cursor = Sprite.new
+    @cursor.bitmap = Cache.title("Cursor")  
+    @cursor.opacity = 0
     @sprite = Plane.new    
     @sprite.bitmap = Cache.title("Plane1")
     @sprite2 = Plane.new 
@@ -263,8 +289,21 @@ class Scene_Title
     @sprite.z  = 1
     @sprite2.z = 2
     @sprite3.z = 3
-    @com.z = 4
-    @sprite_title.z = 5    
+    @container.x = CONTAINER_X
+    @container.y = CONTAINER_Y
+    @container.z = 5
+    @options.x = OPTIONS_X
+    @options.y = OPTIONS_Y
+    @options.z = 5
+    @com.x = OPTIONS_X
+    @com.y = OPTIONS_Y
+    @com.z = 6
+    @cursor.x = CURSOR_X
+    @cursor.y = CURSOR_Y
+    @cursor.z = 7
+    @sprite_title.x = 233
+    @sprite_title.y = 32
+    @sprite_title.z = 8
   if TWAVE == true
     @sprite_title.wave_amp = 6
     @sprite_title.wave_length = 240
@@ -276,11 +315,17 @@ class Scene_Title
     @sprite2.bitmap.dispose
     @sprite3.bitmap.dispose    
     @com.bitmap.dispose    
+    @options.bitmap.dispose    
+    @container.bitmap.dispose    
+    @cursor.bitmap.dispose    
     @sprite_title.bitmap.dispose 
     @sprite.dispose
     @sprite2.dispose
     @sprite3.dispose
-    @com.dispose     
+    @com.dispose
+    @options.dispose
+    @container.dispose
+    @cursor.dispose
     @sprite_title.dispose
   end
   def create_command_window(index = 1)
@@ -304,9 +349,12 @@ class Scene_Title
     @sprite_title.wave_speed = 800
     end    
     for i in 0..120
-    @sprite_title.opacity -= 3    
+    @sprite_title.opacity -= FADE_OUT_SPEED
     @sprite_title.update if TWAVE == true    
-    @com.opacity -= 3 
+    @com.opacity -= FADE_OUT_SPEED
+    @options.opacity -= FADE_OUT_SPEED
+    @container.opacity -= FADE_OUT_SPEED
+    @cursor.opacity -= FADE_OUT_SPEED
      case @command_window.index
      when 0    
      @sprite.zoom_x += 0.01

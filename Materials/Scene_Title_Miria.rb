@@ -194,12 +194,12 @@ class Scene_Title
       when 3    # Language
         # command_language
       end
-    elsif Input.trigger?(Input::RIGHT)
+    elsif Input.trigger?(Input::RIGHT) && Localization::LANG.size > 1
       case @command_window.index
       when 3    # Language
         command_language(1)
       end
-    elsif Input.trigger?(Input::LEFT)
+    elsif Input.trigger?(Input::LEFT) && Localization::LANG.size > 1
       case @command_window.index
       when 3    # Language
         command_language(-1)

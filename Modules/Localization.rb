@@ -16,7 +16,7 @@ class Localization
   SPECIAL_SYMBOLS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
   SPECIAL_CHARS = /([àèìòùéÈ])+/
 
-  $default_language = ""
+  $default_language = "en"
   $msg_var = [91,92,93,94]
   $param_var = 95
   @messages = nil

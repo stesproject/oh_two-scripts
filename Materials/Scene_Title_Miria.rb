@@ -123,10 +123,6 @@ class Scene_Title
       $local.get_text("menu_language"),
       Vocab::shutdown
     ]
-
-    if ($default_language != "")
-      @title_commands.delete_at(3)
-    end
   end
 
   def translate_db

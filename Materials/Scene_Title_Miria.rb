@@ -297,8 +297,8 @@ class Scene_Title
     @cursor.x = CURSOR_X
     @cursor.y = CURSOR_Y
     @cursor.z = 7
-    @sprite_title.x = 233
-    @sprite_title.y = 32
+    @sprite_title.x = 237
+    @sprite_title.y = 14
     @sprite_title.z = 8
   if TWAVE == true
     @sprite_title.wave_amp = 6

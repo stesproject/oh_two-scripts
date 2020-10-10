@@ -534,7 +534,7 @@ class Window_Message < Window_Selectable
     @text.gsub!(/\\IC\[([0-9]+)\]/i) { "\x83[#{$1}]" }
 
     # Woratana's :: Map Name
-    @text.gsub!(/\\MAP/i) { "\x01{#{NMS_MAP_NAME_COLOR_ID}}" + nms_get_map_name + "\x01{#{@nms.last_color}}"}
+    @text.gsub!(/\\MAPC/i) { "\x01{#{NMS_MAP_NAME_COLOR_ID}}" + nms_get_map_name + "\x01{#{@nms.last_color}}"}
     # Woratana's :: Actor Class Name
     @text.gsub!(/\\NC\[([0-9]+)\]/i) { "\x01{#{NMS_CLASS_NAME_COLOR_ID}}" + $data_classes[$data_actors[$1.to_i].class_id].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Party Actor Name

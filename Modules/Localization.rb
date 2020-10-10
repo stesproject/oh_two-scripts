@@ -16,14 +16,15 @@ class Localization
   SPECIAL_SYMBOLS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
   SPECIAL_CHARS = /([àèìòùéÈ])+/
 
-  $default_language = "en"
+  $default_language = ""
   $msg_var = [91,92,93,94]
   $param_var = 95
   @messages = nil
 
-  LANG = ["en"]
+  LANG = ["en", "it"]
   LANGUAGES = {
-    "en" => "English"
+    "en" => "English",
+    "it" => "Italiano"
   }
 
   COMMON_INDEXES = {
@@ -34,7 +35,8 @@ class Localization
     "already_equipped" => 5,
     "to_upgrade" => 6,
     "press_to_upgrade" => 7,
-    "not_enough_globes" => 8
+    "not_enough_globes" => 8,
+    "door_closed" => 9
   }
 
   VOCABS_INDEXES = {
@@ -269,7 +271,7 @@ class Localization
       item = get_plural(item_data)
     end
 
-    amount = value > 0 ? value.to_s + " " : ""
+    amount = value > 0 ? value.to_s + " " : value < 0 ? "#{get_text("a-lot")} " : ""
     @messages.push("#{code}#{amount}#{item}!")
 
     if (item2 != nil && value2 != nil)
@@ -413,8 +415,12 @@ class Localization
   end
 
   def convert_special_characters
+    # Woratana's :: Weapon Name
     @msg_block = @msg_block.gsub(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
+    # Character Name
     @msg_block = @msg_block.gsub(/\\N\[([0-9]+)\]/i) { get_text($game_actors[$1.to_i].name) }
+    # Ste's :: Map Name
+    @msg_block = @msg_block.gsub(/\\MAP\[(.*?)\]/i) { get_map_name($1) }
   end
   
   def split_msg_block_in_rows

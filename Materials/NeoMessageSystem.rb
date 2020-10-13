@@ -500,7 +500,7 @@ class Window_Message < Window_Selectable
     #-----------------------
     @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
     @text.gsub!(/\\V\[([0-9]+)\]/i) { $game_variables[$1.to_i] }
-    @text.gsub!(/\\N\[([0-9]+)\]/i) { $local.get_text($game_actors[$1.to_i].name) }
+    # @text.gsub!(/\\N\[([0-9]+)\]/i) { $local.get_text($game_actors[$1.to_i].name) }
     # @text.gsub!(/\\N\[([0-9]+)\]/i) { "\x01{#{NMS_ACTOR_NAME_COLOR_ID}}" + $game_actors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     @text.gsub!(/\\C\[([0-9]+)\]/i) { "\x01{#{$1}}" }
     @text.gsub!(/\\G/i)              { "\x02" }
@@ -534,7 +534,7 @@ class Window_Message < Window_Selectable
     @text.gsub!(/\\IC\[([0-9]+)\]/i) { "\x83[#{$1}]" }
 
     # Woratana's :: Map Name
-    @text.gsub!(/\\MAPC/i) { "\x01{#{NMS_MAP_NAME_COLOR_ID}}" + nms_get_map_name + "\x01{#{@nms.last_color}}"}
+    # @text.gsub!(/\\MAP/i) { "\x01{#{NMS_MAP_NAME_COLOR_ID}}" + nms_get_map_name + "\x01{#{@nms.last_color}}"}
     # Woratana's :: Actor Class Name
     @text.gsub!(/\\NC\[([0-9]+)\]/i) { "\x01{#{NMS_CLASS_NAME_COLOR_ID}}" + $data_classes[$data_actors[$1.to_i].class_id].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Party Actor Name
@@ -544,9 +544,9 @@ class Window_Message < Window_Selectable
     # Woratana's :: Troop Name
     @text.gsub!(/\\NT\[([0-9]+)\]/i) { "\x01{#{NMS_TROOP_NAME_COLOR_ID}}" +  $data_troops[$1.to_i].name + "\x01{#{@nms.last_color}}"  }
     # Woratana's :: Item Name
-    @text.gsub!(/\\NI\[([0-9]+)\]/i) { "\x01{#{NMS_ITEM_NAME_COLOR_ID}}" + $data_items[$1.to_i].name + "\x01{#{@nms.last_color}}"}
+    # @text.gsub!(/\\NI\[([0-9]+)\]/i) { "\x01{#{NMS_ITEM_NAME_COLOR_ID}}" + $data_items[$1.to_i].name + "\x01{#{@nms.last_color}}"}
     # Woratana's :: Weapon Name
-    @text.gsub!(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
+    # @text.gsub!(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
     # Woratana's :: Armor Name
     @text.gsub!(/\\NA\[([0-9]+)\]/i) { "\x01{#{NMS_ARMOR_NAME_COLOR_ID}}" + $data_armors[$1.to_i].name + "\x01{#{@nms.last_color}}" }
     # Woratana's :: Skill Name

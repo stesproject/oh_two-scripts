@@ -78,7 +78,7 @@ class Localization
     "exp_total" => 36,
     "website" => 37,
     "menu_language" => 38,
-    "lv" => 39,
+    "lose" => 39,
     "use_item" => 40,
     "a-lot" => 41,
     "using" => 42,
@@ -417,6 +417,8 @@ class Localization
   def convert_special_characters
     # Woratana's :: Weapon Name
     @msg_block = @msg_block.gsub(/\\NW\[([0-9]+)\]/i) { $data_weapons[$1.to_i].name }
+    # Woratana's :: Item Name
+    @msg_block = @msg_block.gsub(/\\NI\[([0-9]+)\]/i) { $data_items[$1.to_i].name}
     # Character Name
     @msg_block = @msg_block.gsub(/\\N\[([0-9]+)\]/i) { get_text($game_actors[$1.to_i].name) }
     # Ste's :: Map Name

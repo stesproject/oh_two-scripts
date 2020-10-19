@@ -36,7 +36,8 @@ class Localization
     "to_upgrade" => 6,
     "press_to_upgrade" => 7,
     "not_enough_globes" => 8,
-    "door_closed" => 9
+    "door_closed" => 9,
+    "not_now" => 10
   }
 
   VOCABS_INDEXES = {

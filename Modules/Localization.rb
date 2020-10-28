@@ -117,7 +117,8 @@ class Localization
     "Cyberspace" => 13,
     "Kingdom Outskirts" => 14,
     "Race" => 15,
-    "Ancient Ruins" => 16
+    "Ancient Ruins" => 16,
+    "Water City" => 18,
   }
 
   DB_INDEXES = {
@@ -156,7 +157,8 @@ class Localization
     "Spada d'Argento" => 33,
     "Elettrogen" => 34,
     "Spada del Drago" => 35,
-    "Ultimate Sword" => 36
+    "Ultimate Sword" => 36,
+    "King's Crown" => 37
   }
 
   class ItemText
@@ -288,7 +290,7 @@ class Localization
   def set_act_completed(index)
     reset_msg_vars
 
-    text = "\\DELAY[3]" # Set letter x letter delay
+    text = "\\delay[3]" # Set letter x letter delay
     text += get_text("act")
     text += "\\.\\."
 
@@ -410,6 +412,7 @@ class Localization
     @msg_block = cells[lang_id]
 
     if @msg_block != nil && split_in_rows == true
+      @msg_block.insert(0, "\\c[1]") #todo: remove. For testing purpose only.
       convert_special_characters
       split_msg_block_in_rows
     end

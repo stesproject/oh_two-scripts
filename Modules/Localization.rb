@@ -158,7 +158,10 @@ class Localization
     "Elettrogen" => 34,
     "Spada del Drago" => 35,
     "Ultimate Sword" => 36,
-    "King's Crown" => 37
+    "King's Crown" => 37,
+    "Perla Fuoco" => 38,
+    "Perla Ghiaccio" => 39,
+    "Perla Luce" => 40,
   }
 
   class ItemText

@@ -37,8 +37,9 @@ class Localization
     "press_to_upgrade" => 7,
     "not_enough_globes" => 8,
     "door_closed" => 9,
-    "not_now" => 10
-  }
+    "not_now" => 10,
+    "an_obelisk" => 11
+}
 
   VOCABS_INDEXES = {
     "cannot_save" => 1,

@@ -739,6 +739,7 @@ class Game_Interpreter
   #--------------------------------------------------------------------------
   def command_122
     value = 0
+    pa_var_id = 39
     case @params[3]  # Operand
     when 0  # Constant
       value = @params[4]
@@ -834,10 +835,19 @@ class Game_Interpreter
       case @params[2]  # Operation
       when 0  # Set
         $game_variables[i] = value
+        if i == pa_var_id #set PA
+          $game_party.members[0].mp = value
+        end
       when 1  # Add
+        if i == pa_var_id && $game_variables[i] >= 0 #increments PA
+          $game_party.members[0].mp += value
+        end
         $game_variables[i] += value
       when 2  # Sub
         $game_variables[i] -= value
+        if i == pa_var_id #decrease PA
+          $game_party.members[0].mp -= value
+        end
       when 3  # Mul
         $game_variables[i] = value
       when 4  # Div

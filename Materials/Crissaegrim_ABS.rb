@@ -1428,7 +1428,7 @@ class Game_Actor
       level_down
     end
     @hp = [@hp, maxhp].min
-    @mp = [@mp, maxmp].min
+    # @mp = [@mp, maxmp].min #do not restore mp
     if show and @level > last_level
       show_level_up
     end
@@ -1437,7 +1437,7 @@ class Game_Actor
   def show_level_up
     $game_player.animation_id = Crissaegrim_ABS::LevelUp_Animation
     $game_party.members[0].hp = $game_party.members[0].maxhp
-    $game_party.members[0].mp = $game_party.members[0].maxmp
+    # $game_party.members[0].mp = $game_party.members[0].maxmp #do not restore mp
     $game_player.damage = "Level Up"
   end
   def atk_animation_id2

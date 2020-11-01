@@ -8,6 +8,7 @@ Background = "HUD-Background" # Imagem de fundo da hud
 HP_Bar = "HP-Bar" # Imagem da barra de HP
 
 MP_Bar = "MP-Bar" # Imagem da barra de MP
+MP_Bar_Full = "MP-Bar-full" # Imagem da barra de MP full
 
 Base = "Bars-Base" # Imagm do fundo das barras
 
@@ -58,7 +59,7 @@ class Window_CrissaegrimHud < Window_Base
   end
   def refresh
     draw_hp(@actor, 0, 0)
-    draw_mp(@actor, 0, 40)
+    draw_mp(@actor, 0, 15)
     show_state(@actor, 130, 0)
     if Crissaegrim_ABS::Distance_Weapons.has_key?(@actor.weapon_id)
       if Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5] > 0
@@ -117,6 +118,13 @@ class Window_CrissaegrimHud < Window_Base
     ch = back.height
     src_rect = Rect.new(0, 0, cw, ch)    
     self.contents.blt(x, y, back, src_rect)
+    if actor.mp == actor.maxmp
+      mp_full = Cache.system(Crissaegrim_Hud::MP_Bar_Full)    
+      cw = mp_full.width
+      ch = mp_full.height 
+      src_rect = Rect.new(0, 0, cw, ch)
+      self.contents.blt(x, y, mp_full, src_rect)
+    end
   end
 end
 

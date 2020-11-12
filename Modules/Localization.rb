@@ -38,7 +38,12 @@ class Localization
     "not_enough_globes" => 8,
     "door_closed" => 9,
     "not_now" => 10,
-    "an_obelisk" => 11
+    "an_obelisk" => 11,
+    "obelisk1" => 12,
+    "obelisk2" => 13,
+    "obelisk3" => 14,
+    "obelisk4" => 15,
+    "obelisk5" => 16,
 }
 
   VOCABS_INDEXES = {
@@ -163,6 +168,7 @@ class Localization
     "Perla Fuoco" => 38,
     "Perla Ghiaccio" => 39,
     "Perla Luce" => 40,
+    "Armor Powerup" => 41,
   }
 
   class ItemText

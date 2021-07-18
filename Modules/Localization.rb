@@ -169,6 +169,7 @@ class Localization
     "Perla Ghiaccio" => 39,
     "Perla Luce" => 40,
     "Armor Powerup" => 41,
+    "Power Glove" => 42,
   }
 
   class ItemText

@@ -170,6 +170,12 @@ class Localization
     "Perla Luce" => 40,
     "Armor Powerup" => 41,
     "Power Glove" => 42,
+    "cheat_1" => 43,
+    "cheat_2" => 44,
+    "cheat_3" => 45,
+    "cheat_4" => 46,
+    "cheat_5" => 47,
+    "cheat_6" => 48,
   }
 
   class ItemText

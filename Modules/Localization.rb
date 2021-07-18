@@ -44,6 +44,7 @@ class Localization
     "obelisk3" => 14,
     "obelisk4" => 15,
     "obelisk5" => 16,
+    "not_enough_eggs" => 17,
 }
 
   VOCABS_INDEXES = {
@@ -78,10 +79,10 @@ class Localization
     "trophy-hall" => 29,
     "equip" => 30,
     "attack" => 31,
-    "skill" => 32,
-    "guard" => 33,
+    "locked" => 32,
+    "cheat_price" => 33,
     "quit" => 34,
-    "exp_next" => 35,
+    "unlock" => 35,
     "exp_total" => 36,
     "website" => 37,
     "menu_language" => 38,
@@ -429,7 +430,7 @@ class Localization
     @msg_block = cells[lang_id]
 
     if @msg_block != nil && split_in_rows == true
-      @msg_block.insert(0, "\\c[1]") #todo: remove. For testing purpose only.
+      # @msg_block.insert(0, "\\c[1]") #TODO: remove. For testing purpose only.
       convert_special_characters
       split_msg_block_in_rows
     end

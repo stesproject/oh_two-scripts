@@ -105,7 +105,12 @@ class Localization
     "fury" => 55,
     "king" => 56,
     "sage" => 57,
-    "general" => 58
+    "general" => 58,
+    "enable" => 59,
+    "disable" => 60,
+    "fiery" => 61,
+    "icy" => 62,
+    "electric" => 63
   }
 
   MAPS_INDEXES = {

@@ -8,9 +8,6 @@ class Localization
   attr_accessor :words
   attr_accessor :message_row
 
-  SWORDS_CAN_UPGRADE = [2,7,8,10,12,13,18,22]
-  UPGRADE_W_ITEM = [13,18,22]
-
   NEW_LINE_CHAR = "§"
   ROW_LENGTH_MAX = 52
   MESSAGES_MAX = 4
@@ -47,7 +44,7 @@ class Localization
     "obelisk5" => 16,
     "not_enough_eggs" => 17,
     "to_upgrade_w_item" => 18,
-    "not_pearl" => 19,
+    "not_1_item" => 19
 }
 
   VOCABS_INDEXES = {
@@ -86,7 +83,7 @@ class Localization
     "cheat_price" => 33,
     "quit" => 34,
     "unlock" => 35,
-    "exp_total" => 36,
+    "can_use" => 36,
     "website" => 37,
     "menu_language" => 38,
     "lose" => 39,
@@ -113,7 +110,8 @@ class Localization
     "disable" => 60,
     "fiery" => 61,
     "icy" => 62,
-    "electric" => 63
+    "electric" => 63,
+    "upgrade_to_use" => 64
   }
 
   MAPS_INDEXES = {
@@ -394,22 +392,28 @@ class Localization
     msg = "#{weapon.name.upcase} \\c[3]#{atk}: #{weapon.atk} #{diff_text}"
     @messages.push(msg)
 
-    if SWORDS_CAN_UPGRADE.include?(index)
+    if Weapons::CAN_UPGRADE.include?(index)
       upgrade_data = weapon.note.split("/")
 
       $game_variables[87] = upgrade_data[0].to_i # Red Globes / Id of the item needed to upgrade the weapon
       if upgrade_data.size > 1
         $game_variables[98] = upgrade_data[1].to_i # Counter value (determines the process speed)
       else
-        $game_variables[95] = $data_items[$game_variables[87]].name
+        $game_variables[95] = $data_items[$game_variables[87]].name # Item name needed to upgrade the weapon
+      end
+
+      if Weapons::UPGRADE_TO_USE.include?(index)
+        @messages.push(get_text("upgrade_to_use"))
+      else
+        @messages.push(get_text("equip"))
       end
 
       msg = "\\c[10]#{get_text("upgrade_weap")}\\c[15]"
-      @messages.push(get_text("equip"))
       @messages.push(msg)
     else
       @messages.push(get_text("equip"))
     end
+
     @messages.push("#{get_text("cancel")}")
 
     set_msg_vars

@@ -1,0 +1,5 @@
+class Weapons
+  CAN_UPGRADE = [2,7,8,10,12,13,15,18,22]
+  UPGRADE_W_ITEM = [13,18,22]
+  UPGRADE_TO_USE = [15,26]
+end

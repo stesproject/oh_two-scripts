@@ -23,7 +23,7 @@ class Spriteset_Map
   #--------------------------------------------------------------------------
   def initialize
     # create_windows
-    $texts_w = nil
+    $tw = nil
     spriteset_name_window_initialize
     update
   end
@@ -31,16 +31,16 @@ class Spriteset_Map
   # * Create Windows
   #--------------------------------------------------------------------------
   def create_windows
-    $texts_w = Window_MapTexts.new
-    $texts_w.show_name
+    $tw = Window_MapTexts.new
+    $tw.show_name
   end
   #--------------------------------------------------------------------------
   # * Frame Update
   #--------------------------------------------------------------------------
   def update
     spriteset_name_window_update
-    if $texts_w != nil
-      $texts_w.update
+    if $tw != nil
+      $tw.update
     end
   end
   #--------------------------------------------------------------------------
@@ -48,8 +48,8 @@ class Spriteset_Map
   #--------------------------------------------------------------------------
   def dispose
     spriteset_name_window_dispose
-    if $texts_w != nil
-      $texts_w.dispose
+    if $tw != nil
+      $tw.dispose
     end
   end
 end
@@ -64,8 +64,8 @@ class Window_MapTexts < Window_Base
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
-  def initialize(texts="", lh=32)
-    super(0, 0, 544, 416)
+  def initialize(texts="", lh=32, x=0, y=0)
+    super(x, y, 544, 416)
     self.visible = false
     self.openness = 255
     self.back_opacity = 0

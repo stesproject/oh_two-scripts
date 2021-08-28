@@ -222,6 +222,15 @@ class Localization
     end
   end
 
+  def get_msg_vars
+    return [
+      $game_variables[$msg_var[0]],
+      $game_variables[$msg_var[1]],
+      $game_variables[$msg_var[2]],
+      $game_variables[$msg_var[3]],
+    ]
+  end
+
   def get_db_object(name)
     text = ItemText.new()
 

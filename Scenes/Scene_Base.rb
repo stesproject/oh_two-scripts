@@ -61,7 +61,10 @@ class Scene_Base
   def snapshot_for_background
     $game_temp.background_bitmap.dispose
     $game_temp.background_bitmap = Graphics.snap_to_bitmap
-    $game_temp.background_bitmap.blur
+    if (!$dont_blur_bg)
+      $game_temp.background_bitmap.blur
+    end
+    $dont_blur_bg = false
   end
   #--------------------------------------------------------------------------
   # * Create Background for Menu Screen

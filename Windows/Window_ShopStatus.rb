@@ -11,8 +11,8 @@ class Window_ShopStatus < Window_Base
   #     x : window X coordinate
   #     y : window Y coordinate
   #--------------------------------------------------------------------------
-  def initialize(x, y)
-    super(x, y, 240, 304)
+  def initialize(x, y, w = 240, h = 304)
+    super(x, y, w, h)
     @item = nil
     refresh
   end
@@ -24,9 +24,9 @@ class Window_ShopStatus < Window_Base
     if @item != nil
       number = $game_party.item_number(@item)
       self.contents.font.color = system_color
-      self.contents.draw_text(4, 0, 200, WLH, Vocab::Possession)
+      self.contents.draw_text(4, 0, 64, WLH, Vocab::Possession)
       self.contents.font.color = normal_color
-      self.contents.draw_text(4, 0, 200, WLH, number, 2)
+      self.contents.draw_text(4, 0, 64, WLH, number, 2)
       for actor in $game_party.members
         x = 4
         y = WLH * (2 + actor.index * 2)
@@ -45,7 +45,7 @@ class Window_ShopStatus < Window_Base
     enabled = actor.equippable?(@item)
     self.contents.font.color = normal_color
     self.contents.font.color.alpha = enabled ? 255 : 128
-    self.contents.draw_text(x, y, 200, WLH, actor.name)
+    self.contents.draw_text(x, y, 64, WLH, actor.name)
     if @item.is_a?(RPG::Weapon)
       item1 = weaker_weapon(actor)
     elsif actor.two_swords_style and @item.kind == 0
@@ -63,7 +63,7 @@ class Window_ShopStatus < Window_Base
         def2 = @item == nil ? 0 : @item.def
         change = def2 - def1
       end
-      self.contents.draw_text(x, y, 200, WLH, sprintf("%+d", change), 2)
+      self.contents.draw_text(x, y, 64, WLH, sprintf("%+d", change), 2)
     end
     draw_item_name(item1, x, y + WLH, enabled)
   end

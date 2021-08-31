@@ -10,8 +10,8 @@ class Window_Gold < Window_Base
   #     x : window X coordinate
   #     y : window Y coordinate
   #--------------------------------------------------------------------------
-  def initialize(x, y)
-    super(x, y, 160, WLH + 32)
+  def initialize(x, y, w = 160, h = WLH + 32)
+    super(x, y, w, h)
     refresh
   end
   #--------------------------------------------------------------------------
@@ -19,6 +19,6 @@ class Window_Gold < Window_Base
   #--------------------------------------------------------------------------
   def refresh
     self.contents.clear
-    draw_currency_value($game_party.gold, 4, 0, 120)
+    draw_currency_value($game_party.gold, -16, 0, 120)
   end
 end

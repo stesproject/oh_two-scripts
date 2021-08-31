@@ -9,6 +9,7 @@ class Window_Base < Window
   # * Constants
   #--------------------------------------------------------------------------
   WLH = 24                  # Window Line Height
+  WTS = 48                  # Window Transition Speed
   #--------------------------------------------------------------------------
   # * Object Initialization
   #     x      : window x-coordinate
@@ -50,10 +51,10 @@ class Window_Base < Window
   def update
     super
     if @opening
-      self.openness += 48
+      self.openness += WTS
       @opening = false if self.openness == 255
     elsif @closing
-      self.openness -= 48
+      self.openness -= WTS
       @closing = false if self.openness == 0
     end
   end

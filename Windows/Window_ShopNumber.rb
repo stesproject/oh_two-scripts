@@ -11,8 +11,8 @@ class Window_ShopNumber < Window_Base
   #     x : window X coordinate
   #     y : window Y coordinate
   #--------------------------------------------------------------------------
-  def initialize(x, y)
-    super(x, y, 304, 304)
+  def initialize(x, y, w = 304, h = 304)
+    super(x, y, w, h)
     @item = nil
     @max = 1
     @price = 0
@@ -38,7 +38,7 @@ class Window_ShopNumber < Window_Base
   # * Refresh
   #--------------------------------------------------------------------------
   def refresh
-    y = 96
+    y = 0
     self.contents.clear
     draw_item_name(@item, 0, y)
     self.contents.font.color = normal_color

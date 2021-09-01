@@ -88,6 +88,12 @@ class Window_Base < Window
     return text_color(0)
   end
   #--------------------------------------------------------------------------
+  # * Get Dark Text Color
+  #--------------------------------------------------------------------------
+  def dark_color
+    return text_color(15)
+  end
+  #--------------------------------------------------------------------------
   # * Get System Text Color
   #--------------------------------------------------------------------------
   def system_color
@@ -390,12 +396,12 @@ class Window_Base < Window
   #     y       : draw spot y-coordinate
   #     enabled : Enabled flag. When false, draw semi-transparently.
   #--------------------------------------------------------------------------
-  def draw_item_name(item, x, y, enabled = true)
+  def draw_item_name(item, x, y, enabled = true, width = 172, symbols = "")
     if item != nil
       draw_icon(item.icon_index, x, y, enabled)
       self.contents.font.color = normal_color
       self.contents.font.color.alpha = enabled ? 255 : 128
-      self.contents.draw_text(x + 30, y, 172, WLH, item.name)
+      self.contents.draw_text(x + 30, y, width, WLH, "#{item.name}#{symbols}")
     end
   end
   #--------------------------------------------------------------------------
@@ -405,12 +411,12 @@ class Window_Base < Window
   #     y     : draw spot y-coordinate
   #     width : Width
   #--------------------------------------------------------------------------
-  def draw_currency_value(value, x, y, width)
+  def draw_currency_value(value, x, y, width, c1 = normal_color, c2 = text_color(14))
     cx = contents.text_size(Vocab::gold).width
     self.contents.font.italic = false
-    self.contents.font.color = normal_color
+    self.contents.font.color = c1
     self.contents.draw_text(x, y, width-cx-2, WLH, value, 2)
-    self.contents.font.color = text_color(14)
+    self.contents.font.color = c2
     self.contents.draw_text(x, y, width, WLH, Vocab::gold, 2)
   end
 end

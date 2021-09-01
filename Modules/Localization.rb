@@ -44,7 +44,8 @@ class Localization
     "obelisk5" => 16,
     "not_enough_eggs" => 17,
     "to_upgrade_w_item" => 18,
-    "not_1_item" => 19
+    "not_1_item" => 19,
+    "not_enough_d" => 20
 }
 
   VOCABS_INDEXES = {
@@ -112,7 +113,6 @@ class Localization
     "icy" => 62,
     "electric" => 63,
     "upgrade_to_use" => 64,
-    "owned" => 65,
   }
 
   MAPS_INDEXES = {

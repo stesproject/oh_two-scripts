@@ -5,10 +5,13 @@ class Scene_ShopCustom < Scene_Base
   def start
     super
     create_background
-    @help_window = Window_Help.new(0, 336, 544, 80)
+    @help_window = Window_Help.new(0, 288, 544, 128)
+    @help_window.visible = false
+    @help_window.active = false
     @gold_window = $gold_window
-    @status_window = Window_ShopStatusNumber.new(0, 290, 544, 126)
+    @status_window = Window_ShopStatusNumber.new(0, 288, 544, 128)
     @status_window.visible = false
+    @status_window.active = false
 
     load_items
 
@@ -50,6 +53,15 @@ class Scene_ShopCustom < Scene_Base
     @menuback_sprite.color.set(0, 0, 0, 0)
     update_menu_background
   end
+
+  def reset_item_quantity
+    if @item != nil && @item.speed > 0 #Get variable id associated to item (from speed field)
+      item_q = $game_party.item_number(@item)
+      var = @item.speed
+      $game_variables[var] = item_q
+      $game_party.lose_item(@item, 99)
+    end
+  end
   #--------------------------------------------------------------------------
   # * Set Items
   #--------------------------------------------------------------------------
@@ -76,7 +88,9 @@ class Scene_ShopCustom < Scene_Base
     if Input.trigger?(Input::B)
       close_shop
     elsif Input.trigger?(Input::C)
-      decide_number_input
+      if !@help_window.active
+        decide_number_input
+      end
       close_shop
     end
   end
@@ -86,16 +100,15 @@ class Scene_ShopCustom < Scene_Base
   def decide_number_input
     Sound.play_shop
     @status_window.active = false
-    @status_window.visible = false
     case $shop_mode
     when 0  # Buy
       $game_party.lose_gold(@status_window.number * @item.price)
-      $game_party.gain_item(@item, @status_window.number, nil, true)
+      $game_party.gain_item(@item, @status_window.number)
       @gold_window.refresh
       @status_window.refresh
     when 1  # sell
       $game_party.gain_gold(@status_window.number * (@item.price / 2))
-      $game_party.lose_item(@item, @status_window.number, nil, true)
+      $game_party.lose_item(@item, @status_window.number)
       @gold_window.refresh
       @status_window.refresh
     end
@@ -103,34 +116,43 @@ class Scene_ShopCustom < Scene_Base
 
   def start_buy
     Sound.play_decision
-    @status_window.visible = true
-
+    @status_window.active = true
     select_item
   end
 
   def start_sell
     Sound.play_decision
-    @status_window.visible = true
   end
 
   def select_item
     @item = @items[0]
-    @help_window.set_text(@item.description)
     number = $game_party.item_number(@item)
-    if @item == nil or @item.price > $game_party.gold or number == 99
+    if @item == nil or @item.price > $game_party.gold or number >= 99
       Sound.play_buzzer
+      if @item.price > $game_party.gold
+        text = $local.set_common_msg("not_enough_d")
+        show_msg($local.get_msg_vars[0])
+      elsif number >= 99
+        show_msg("Not available.")
+      end
     else
       Sound.play_decision
       max = @item.price == 0 ? 99 : $game_party.gold / @item.price
       max = [max, 99 - number].min
       @status_window.set(@item, max, @item.price)
-      @status_window.active = true
       @status_window.visible = true
     end
   end
 
+  def show_msg(msg)
+    @help_window.set_text(msg)
+    @help_window.active = true
+    @help_window.visible = true
+  end
+
   def close_shop
     Sound.play_cancel
+    reset_item_quantity
     $scene = Scene_Map.new
     Call_Common_Event.new(28) #Update HUD meat counter
   end

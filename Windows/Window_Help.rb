@@ -8,8 +8,9 @@ class Window_Help < Window_Base
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
-  def initialize(x = 0, y = 0, w = 544, h = WLH + 32)
+  def initialize(x = 0, y = 0, w = 544, h = WLH + 32, color = nil)
     super(x, y, w, h)
+    @color = color != nil ? color : normal_color
   end
   #--------------------------------------------------------------------------
   # * Set Text
@@ -20,7 +21,7 @@ class Window_Help < Window_Base
     if text != @text or align != @align
       self.contents.clear
       self.opacity = 0
-      self.contents.font.color = text_color(15)
+      self.contents.font.color = @color
       self.contents.font.italic = false
       self.contents.font.shadow = false
       self.contents.draw_text(0, 0, self.width - 40, WLH, text, align)

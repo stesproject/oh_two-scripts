@@ -42,39 +42,35 @@ class Window_ShopStatusNumber < Window_Base
   def refresh
     self.contents.clear
     if @item != nil
-      y = 24
-      number = $game_party.item_number(@item)
-      owned = $local.get_text("owned")
-      text_width = self.contents.text_size(owned).width
+      y = 0
       self.contents.font.italic = false
-      self.contents.font.shadow = false
-      self.contents.font.color = text_color(15)
-      self.contents.draw_text(0, y, text_width, WLH, "#{owned}")
-      self.contents.font.color = text_color(15)
-      self.contents.draw_text(text_width / 2, y, 64, WLH, number, 2)
+      text_width = self.contents.text_size(@item.name).width
+      text_width += 20
+      draw_item_name(@item, 0, y, true, text_width, ":")
+      number = $game_party.item_number(@item)
+      owned = $local.get_text("possession")
+      self.contents.draw_text(text_width + 10, y, 32, WLH, number, 2)
+      self.contents.draw_text(text_width + 44, y, 180, WLH, " #{owned}")
       refresh_numbers
-      for actor in $game_party.members
-        x = 4
-        y = WLH * (2 + actor.index * 2)
-        draw_actor_parameter_change(actor, x, y)
-      end
     end
   end
   #--------------------------------------------------------------------------
   # * Refresh numbers
   #--------------------------------------------------------------------------
   def refresh_numbers
-    y = 0
-    draw_item_name(@item, 0, y)
-    text_width = self.contents.text_size(@item.name).width
-    x = text_width * 2
+    x = 0
+    y = 28
     width = 20
-    self.contents.font.color = normal_color
+    self.contents.font.italic = false
+    self.contents.font.shadow = false
+    self.contents.font.color = dark_color
+
     self.contents.draw_text(x, y, width, WLH, "×")
     self.contents.draw_text(x + 24, y, width, WLH, @number, 2)
     self.cursor_rect.set(x + 20, y, width + 8, WLH)
     self.contents.draw_text(x + 58, y, width, WLH, "=")
-    draw_currency_value(@price * @number, x + 100, y, 120)
+
+    draw_currency_value(@price * @number, x + 26, y, 120, dark_color, text_color(2))
   end
   #--------------------------------------------------------------------------
   # * Frame Update

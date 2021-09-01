@@ -395,7 +395,7 @@ class Window_Base < Window
       draw_icon(item.icon_index, x, y, enabled)
       self.contents.font.color = normal_color
       self.contents.font.color.alpha = enabled ? 255 : 128
-      self.contents.draw_text(x + 24, y, 172, WLH, item.name)
+      self.contents.draw_text(x + 30, y, 172, WLH, item.name)
     end
   end
   #--------------------------------------------------------------------------

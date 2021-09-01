@@ -5,19 +5,12 @@ class Scene_ShopCustom < Scene_Base
   def start
     super
     create_background
-    @help_window = Window_Help.new
-    @help_window.y = -56
+    @help_window = Window_Help.new(0, 336, 544, 80)
     @gold_window = $gold_window
-    @buy_window = Window_ShopBuy.new(0, 112)
-    @buy_window.active = false
-    @buy_window.visible = false
-    @buy_window.help_window = @help_window
-    @sell_window = Window_ShopSell.new(0, 112, 544, 304)
-    @sell_window.active = false
-    @sell_window.visible = false
-    @sell_window.help_window = @help_window
     @status_window = Window_ShopStatusNumber.new(0, 290, 544, 126)
     @status_window.visible = false
+
+    load_items
 
     case $shop_mode
     when 0
@@ -33,8 +26,6 @@ class Scene_ShopCustom < Scene_Base
     super
     dispose_menu_background
     @help_window.dispose
-    @buy_window.dispose
-    @sell_window.dispose
     @status_window.dispose
   end
   #--------------------------------------------------------------------------
@@ -45,8 +36,6 @@ class Scene_ShopCustom < Scene_Base
     update_menu_background
     @help_window.update
     @gold_window.update
-    @buy_window.update
-    @sell_window.update
     @status_window.update
     if @status_window.active
       update_number_input
@@ -60,6 +49,25 @@ class Scene_ShopCustom < Scene_Base
     @menuback_sprite.bitmap = $game_temp.background_bitmap
     @menuback_sprite.color.set(0, 0, 0, 0)
     update_menu_background
+  end
+  #--------------------------------------------------------------------------
+  # * Set Items
+  #--------------------------------------------------------------------------
+  def load_items
+    @items = []
+    for goods_item in $game_temp.shop_goods
+      case goods_item[0]
+      when 0
+        item = $data_items[goods_item[1]]
+      when 1
+        item = $data_weapons[goods_item[1]]
+      when 2
+        item = $data_armors[goods_item[1]]
+      end
+      if item != nil
+        @items.push(item)
+      end
+    end
   end
   #--------------------------------------------------------------------------
   # * Update Number Input
@@ -95,7 +103,6 @@ class Scene_ShopCustom < Scene_Base
 
   def start_buy
     Sound.play_decision
-    @buy_window.active = true
     @status_window.visible = true
 
     select_item
@@ -103,12 +110,12 @@ class Scene_ShopCustom < Scene_Base
 
   def start_sell
     Sound.play_decision
-    @sell_window.active = true
     @status_window.visible = true
   end
 
   def select_item
-    @item = @buy_window.item
+    @item = @items[0]
+    @help_window.set_text(@item.description)
     number = $game_party.item_number(@item)
     if @item == nil or @item.price > $game_party.gold or number == 99
       Sound.play_buzzer
@@ -116,7 +123,6 @@ class Scene_ShopCustom < Scene_Base
       Sound.play_decision
       max = @item.price == 0 ? 99 : $game_party.gold / @item.price
       max = [max, 99 - number].min
-      @buy_window.active = false
       @status_window.set(@item, max, @item.price)
       @status_window.active = true
       @status_window.visible = true

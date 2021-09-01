@@ -407,9 +407,10 @@ class Window_Base < Window
   #--------------------------------------------------------------------------
   def draw_currency_value(value, x, y, width)
     cx = contents.text_size(Vocab::gold).width
+    self.contents.font.italic = false
     self.contents.font.color = normal_color
     self.contents.draw_text(x, y, width-cx-2, WLH, value, 2)
-    self.contents.font.color = system_color
+    self.contents.font.color = text_color(14)
     self.contents.draw_text(x, y, width, WLH, Vocab::gold, 2)
   end
 end

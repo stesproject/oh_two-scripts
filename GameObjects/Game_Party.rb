@@ -191,11 +191,16 @@ class Game_Party < Game_Unit
   #     n             : Number
   #     include_equip : Include equipped items
   #--------------------------------------------------------------------------
-  def gain_item(item, n, include_equip = false)
+  def gain_item(item, n, include_equip = false, shopping = false)
     number = item_number(item)
     case item
     when RPG::Item
       @items[item.id] = [[number + n, 0].max, 99].min
+      if shopping && item.speed > 0 #Get variable id associated to item (from speed field)
+        var = item.speed
+        $game_variables[var] = @items[item.id]
+        @items[item.id] = 0
+      end
     when RPG::Weapon
       @weapons[item.id] = [[number + n, 0].max, 99].min
     when RPG::Armor

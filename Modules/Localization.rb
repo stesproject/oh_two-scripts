@@ -111,7 +111,8 @@ class Localization
     "fiery" => 61,
     "icy" => 62,
     "electric" => 63,
-    "upgrade_to_use" => 64
+    "upgrade_to_use" => 64,
+    "owned" => 65,
   }
 
   MAPS_INDEXES = {

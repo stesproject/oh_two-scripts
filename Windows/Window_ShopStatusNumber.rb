@@ -43,10 +43,13 @@ class Window_ShopStatusNumber < Window_Base
     self.contents.clear
     if @item != nil
       number = $game_party.item_number(@item)
-      self.contents.font.color = system_color
-      self.contents.draw_text(4, 0, 32, WLH, Vocab::Possession)
-      self.contents.font.color = normal_color
-      self.contents.draw_text(4, 0, 32, WLH, number, 2)
+      owned = $local.get_text("owned")
+      text_width = self.contents.text_size(owned).width
+      self.contents.font.italic = false
+      self.contents.font.color = text_color(15)
+      self.contents.draw_text(0, 32, text_width, WLH, "#{owned}")
+      self.contents.font.color = text_color(15)
+      self.contents.draw_text(text_width / 2, 32, 64, WLH, number, 2)
       refresh_numbers
       for actor in $game_party.members
         x = 4
@@ -60,7 +63,6 @@ class Window_ShopStatusNumber < Window_Base
   #--------------------------------------------------------------------------
   def refresh_numbers
     y = 0
-    self.contents.clear
     draw_item_name(@item, 0, y)
     self.contents.font.color = normal_color
     self.contents.draw_text(112, y, 20, WLH, "×")
@@ -105,7 +107,7 @@ class Window_ShopStatusNumber < Window_Base
     enabled = actor.equippable?(@item)
     self.contents.font.color = normal_color
     self.contents.font.color.alpha = enabled ? 255 : 128
-    self.contents.draw_text(x, y, 32, WLH, actor.name)
+    self.contents.draw_text(x, y, 20, WLH, actor.name)
     if @item.is_a?(RPG::Weapon)
       item1 = weaker_weapon(actor)
     elsif actor.two_swords_style and @item.kind == 0
@@ -123,7 +125,7 @@ class Window_ShopStatusNumber < Window_Base
         def2 = @item == nil ? 0 : @item.def
         change = def2 - def1
       end
-      self.contents.draw_text(x, y, 32, WLH, sprintf("%+d", change), 2)
+      self.contents.draw_text(x, y, 20, WLH, sprintf("%+d", change), 2)
     end
     draw_item_name(item1, x, y + WLH, enabled)
   end

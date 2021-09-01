@@ -82,12 +82,12 @@ class Scene_ShopCustom < Scene_Base
     case $shop_mode
     when 0  # Buy
       $game_party.lose_gold(@status_window.number * @item.price)
-      $game_party.gain_item(@item, @status_window.number)
+      $game_party.gain_item(@item, @status_window.number, nil, true)
       @gold_window.refresh
       @status_window.refresh
     when 1  # sell
       $game_party.gain_gold(@status_window.number * (@item.price / 2))
-      $game_party.lose_item(@item, @status_window.number)
+      $game_party.lose_item(@item, @status_window.number, nil, true)
       @gold_window.refresh
       @status_window.refresh
     end
@@ -126,6 +126,7 @@ class Scene_ShopCustom < Scene_Base
   def close_shop
     Sound.play_cancel
     $scene = Scene_Map.new
+    Call_Common_Event.new(28) #Update HUD meat counter
   end
 
 end

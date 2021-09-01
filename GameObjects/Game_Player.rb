@@ -247,7 +247,7 @@ class Game_Player < Game_Character
   def check_event_trigger_here(triggers)
     return false if $game_map.interpreter.running?
     result = false
-    for event in $game_map.events_xy(@x, @y)
+    for event in $game_map.events_xy(@x.round, @y.round)
       if triggers.include?(event.trigger) and event.priority_type != 1
         event.start
         result = true if event.starting

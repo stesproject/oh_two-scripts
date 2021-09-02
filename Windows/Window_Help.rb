@@ -8,9 +8,9 @@ class Window_Help < Window_Base
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
-  def initialize(x = 0, y = 0, w = 544, h = WLH + 32, color = nil)
+  def initialize(x = 0, y = 0, w = 544, h = WLH + 32, dark = false)
     super(x, y, w, h)
-    @color = color != nil ? color : normal_color
+    @color = dark == true ? dark_color : normal_color
   end
   #--------------------------------------------------------------------------
   # * Set Text

@@ -12,11 +12,11 @@ class Scene_Shop < Scene_Base
     create_background
     load_items
 
-    @help_window = Window_Help.new(0, 288, 544, 128)
+    @help_window = Window_Help.new(0, 316, 544, 100, true)
     @help_window.visible = false
     @help_window.active = false
     @gold_window = $gold_window
-    @status_window = Window_ShopNumber.new(0, 288, 544, 128)
+    @status_window = Window_ShopNumber.new(0, 316, 544, 100)
     @status_window.visible = false
     @status_window.active = false
 

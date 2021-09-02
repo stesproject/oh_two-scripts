@@ -41,7 +41,7 @@ class Window_ShopNumber < Window_Base
   #--------------------------------------------------------------------------
   def refresh
     x = 0
-    y = 28
+    y = 0
     width = 20
     self.contents.clear
     self.contents.font.italic = false

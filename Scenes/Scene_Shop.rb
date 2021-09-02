@@ -4,6 +4,8 @@
 #  This class performs shop screen processing.
 #==============================================================================
 class Scene_Shop < Scene_Base
+  ONE_AVAILABLE = [13] #Item ids whose only one unit is available
+  SWORDS_VARIABLE_ID = 13
   #--------------------------------------------------------------------------
   # * Start processing
   #--------------------------------------------------------------------------
@@ -102,6 +104,9 @@ class Scene_Shop < Scene_Base
       $game_party.gain_item(@item, @status_window.number)
       @gold_window.refresh
       @status_window.refresh
+      if @item.is_a?(RPG::Weapon)
+        unlock_weapon
+      end
     when 1  # sell
       $game_party.gain_gold(@status_window.number * (@item.price / 2))
       $game_party.lose_item(@item, @status_window.number)
@@ -125,6 +130,7 @@ class Scene_Shop < Scene_Base
       Audio.se_play("Audio/SE/GetReward", 80, 100)
       max = @item.price == 0 ? 99 : $game_party.gold / @item.price
       max = [max, 99 - number].min
+      max = ONE_AVAILABLE.include?(@item.id) || @item.is_a?(RPG::Weapon) ? 1 : max
       @status_window.active = true
       @status_window.set(@item, max, @item.price)
       @status_window.visible = true
@@ -148,6 +154,14 @@ class Scene_Shop < Scene_Base
     @help_window.set_text(msg)
     @help_window.active = true
     @help_window.visible = true
+  end
+
+  def unlock_weapon
+    switch_id = @item.spi
+    if switch_id > 0
+      $game_switches[switch_id] = true
+      $game_variables[SWORDS_VARIABLE_ID] += 1
+    end
   end
 
   def close_shop

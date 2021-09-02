@@ -53,7 +53,7 @@ class Window_ShopNumber < Window_Base
     self.cursor_rect.set(x + 20, y, width + 8, WLH)
     self.contents.draw_text(x + 58, y, width, WLH, "=")
 
-    draw_currency_value(@price * @number, x + 26, y, 120, dark_color, text_color(2))
+    draw_currency_value(@price * @number, x + 26, y, 120, dark_color, text_color(10))
   end
   #--------------------------------------------------------------------------
   # * Frame Update

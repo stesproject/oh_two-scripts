@@ -45,7 +45,7 @@ class Scene_Shop < Scene_Base
     @help_window.update
     @gold_window.update
     @status_window.update
-    if @status_window.active
+    if @status_window.active || @help_window.active
       update_number_input
     end
   end
@@ -58,15 +58,6 @@ class Scene_Shop < Scene_Base
     @menuback_sprite.color.set(0, 0, 0, 0)
     update_menu_background
   end
-
-  # def reset_item_quantity
-  #   if @item != nil && @item.speed > 0 #Get variable id associated to item (from speed field)
-  #     item_q = $game_party.item_number(@item)
-  #     var = @item.speed
-  #     $game_variables[var] = item_q
-  #     $game_party.lose_item(@item, 99)
-  #   end
-  # end
   #--------------------------------------------------------------------------
   # * Set Items
   #--------------------------------------------------------------------------
@@ -168,5 +159,4 @@ class Scene_Shop < Scene_Base
       Call_Common_Event.new(51) #Check inventory after sell
     end
   end
-
 end

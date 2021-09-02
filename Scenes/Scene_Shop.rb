@@ -152,11 +152,6 @@ class Scene_Shop < Scene_Base
 
   def close_shop
     Sound.play_cancel
-    # reset_item_quantity
     $scene = Scene_Map.new
-    Call_Common_Event.new(28) #Update HUD meat counter
-    if $shop_mode == 1
-      Call_Common_Event.new(51) #Check inventory after sell
-    end
   end
 end

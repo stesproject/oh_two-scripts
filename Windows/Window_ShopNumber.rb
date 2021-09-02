@@ -11,12 +11,14 @@ class Window_ShopNumber < Window_Base
   #     x : window X coordinate
   #     y : window Y coordinate
   #--------------------------------------------------------------------------
-  def initialize(x, y, w = 304, h = 304)
+  def initialize(x = 0, y = 288, w = 544, h = 128)
     super(x, y, w, h)
     @item = nil
     @max = 1
     @price = 0
     @number = 1
+    self.opacity = 0
+    refresh
   end
   #--------------------------------------------------------------------------
   # * Set Items, Max Quantity, and Price
@@ -35,17 +37,23 @@ class Window_ShopNumber < Window_Base
     return @number
   end
   #--------------------------------------------------------------------------
-  # * Refresh
+  # * Refresh numbers
   #--------------------------------------------------------------------------
   def refresh
-    y = 0
+    x = 0
+    y = 28
+    width = 20
     self.contents.clear
-    draw_item_name(@item, 0, y)
-    self.contents.font.color = normal_color
-    self.contents.draw_text(212, y, 20, WLH, "×")
-    self.contents.draw_text(248, y, 20, WLH, @number, 2)
-    self.cursor_rect.set(244, y, 28, WLH)
-    draw_currency_value(@price * @number, 4, y + WLH * 2, 264)
+    self.contents.font.italic = false
+    self.contents.font.shadow = false
+    self.contents.font.color = dark_color
+
+    self.contents.draw_text(x, y, width, WLH, "×")
+    self.contents.draw_text(x + 24, y, width, WLH, @number, 2)
+    self.cursor_rect.set(x + 20, y, width + 8, WLH)
+    self.contents.draw_text(x + 58, y, width, WLH, "=")
+
+    draw_currency_value(@price * @number, x + 26, y, 120, dark_color, text_color(2))
   end
   #--------------------------------------------------------------------------
   # * Frame Update

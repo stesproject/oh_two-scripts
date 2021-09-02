@@ -159,13 +159,18 @@ class Game_Party < Game_Unit
   #     item : item
   #--------------------------------------------------------------------------
   def item_number(item)
-    case item
-    when RPG::Item
-      number = @items[item.id]
-    when RPG::Weapon
-      number = @weapons[item.id]
-    when RPG::Armor
-      number = @armors[item.id]
+    var_id = get_var_id(item)
+    if var_id > 0
+      number = $game_variables[var_id]
+    else
+      case item
+      when RPG::Item
+        number = @items[item.id]
+      when RPG::Weapon
+        number = @weapons[item.id]
+      when RPG::Armor
+        number = @armors[item.id]
+      end
     end
     return number == nil ? 0 : number
   end
@@ -193,20 +198,25 @@ class Game_Party < Game_Unit
   #--------------------------------------------------------------------------
   def gain_item(item, n, include_equip = false)
     number = item_number(item)
-    case item
-    when RPG::Item
-      @items[item.id] = [[number + n, 0].max, 99].min
-    when RPG::Weapon
-      @weapons[item.id] = [[number + n, 0].max, 99].min
-    when RPG::Armor
-      @armors[item.id] = [[number + n, 0].max, 99].min
-    end
-    n += number
-    if include_equip and n < 0
-      for actor in members
-        while n < 0 and actor.equips.include?(item)
-          actor.discard_equip(item)
-          n += 1
+    var_id = get_var_id(item)
+    if var_id > 0
+      $game_variables[var_id] = [[number + n, 0].max, 99].min
+    else
+      case item
+      when RPG::Item
+        @items[item.id] = [[number + n, 0].max, 99].min
+      when RPG::Weapon
+        @weapons[item.id] = [[number + n, 0].max, 99].min
+      when RPG::Armor
+        @armors[item.id] = [[number + n, 0].max, 99].min
+      end
+      n += number
+      if include_equip and n < 0
+        for actor in members
+          while n < 0 and actor.equips.include?(item)
+            actor.discard_equip(item)
+            n += 1
+          end
         end
       end
     end
@@ -292,5 +302,20 @@ class Game_Party < Game_Unit
     for actor in members
       actor.remove_states_battle
     end
+  end
+  #--------------------------------------------------------------------------
+  # * Get item related variable id (by Ste)
+  #--------------------------------------------------------------------------
+  def get_var_id(item)
+    var_id = 0
+    case item
+    when RPG::Item
+      var_id = item.speed
+    when RPG::Weapon
+      var_id = 0 #todo
+    when RPG::Armor
+      var_id = 0 #todo
+    end
+    return var_id
   end
 end

@@ -11,9 +11,15 @@ class Window_ShopStatus < Window_Base
   #     x : window X coordinate
   #     y : window Y coordinate
   #--------------------------------------------------------------------------
-  def initialize(x, y, w = 240, h = 304)
+  def initialize(x = 0, y = 288, w = 544, h = 128)
     super(x, y, w, h)
-    @item = nil
+    self.opacity = 0
+  end
+  #--------------------------------------------------------------------------
+  # * Set Item
+  #--------------------------------------------------------------------------
+  def set(item)
+    @item = item
     refresh
   end
   #--------------------------------------------------------------------------
@@ -22,18 +28,18 @@ class Window_ShopStatus < Window_Base
   def refresh
     self.contents.clear
     if @item != nil
+      y = 0
+      self.contents.font.italic = false
+      text_width = self.contents.text_size(@item.name).width
+      text_width += 20
+      draw_item_name(@item, 0, y, true, text_width, ":")
       number = $game_party.item_number(@item)
-      self.contents.font.color = system_color
-      self.contents.draw_text(4, 0, 64, WLH, Vocab::Possession)
-      self.contents.font.color = normal_color
-      self.contents.draw_text(4, 0, 64, WLH, number, 2)
-      for actor in $game_party.members
-        x = 4
-        y = WLH * (2 + actor.index * 2)
-        draw_actor_parameter_change(actor, x, y)
-      end
+      owned = $local.get_text("possession")
+      self.contents.draw_text(text_width + 10, y, 32, WLH, number, 2)
+      self.contents.draw_text(text_width + 44, y, 180, WLH, " #{owned}")
     end
   end
+  # CHECK IF METHODS BELOW ARE USED
   #--------------------------------------------------------------------------
   # * Draw Actor's Current Equipment and Parameters
   #     actor : actor
@@ -45,7 +51,7 @@ class Window_ShopStatus < Window_Base
     enabled = actor.equippable?(@item)
     self.contents.font.color = normal_color
     self.contents.font.color.alpha = enabled ? 255 : 128
-    self.contents.draw_text(x, y, 64, WLH, actor.name)
+    self.contents.draw_text(x, y, 20, WLH, actor.name)
     if @item.is_a?(RPG::Weapon)
       item1 = weaker_weapon(actor)
     elsif actor.two_swords_style and @item.kind == 0
@@ -63,7 +69,7 @@ class Window_ShopStatus < Window_Base
         def2 = @item == nil ? 0 : @item.def
         change = def2 - def1
       end
-      self.contents.draw_text(x, y, 64, WLH, sprintf("%+d", change), 2)
+      self.contents.draw_text(x, y, 20, WLH, sprintf("%+d", change), 2)
     end
     draw_item_name(item1, x, y + WLH, enabled)
   end

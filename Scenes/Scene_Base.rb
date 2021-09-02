@@ -33,7 +33,8 @@ class Scene_Base
   # * Execute Transition
   #--------------------------------------------------------------------------
   def perform_transition
-    Graphics.transition(10)
+    fade_speed = $transfer_speed && $transfer_speed != nil ? $transfer_speed : 10
+    Graphics.transition(fade_speed)
   end
   #--------------------------------------------------------------------------
   # * Post-Start Processing

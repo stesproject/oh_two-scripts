@@ -5,6 +5,8 @@ class Scene_ShopCustom < Scene_Base
   def start
     super
     create_background
+    load_items
+
     @help_window = Window_Help.new(0, 288, 544, 128)
     @help_window.visible = false
     @help_window.active = false
@@ -13,13 +15,11 @@ class Scene_ShopCustom < Scene_Base
     @status_window.visible = false
     @status_window.active = false
 
-    load_items
-
     case $shop_mode
     when 0
-      start_buy
+      buy_item
     when 1
-      start_sell
+      sell_item
     end
   end
   #--------------------------------------------------------------------------
@@ -114,17 +114,7 @@ class Scene_ShopCustom < Scene_Base
     end
   end
 
-  def start_buy
-    Sound.play_decision
-    @status_window.active = true
-    select_item
-  end
-
-  def start_sell
-    Sound.play_decision
-  end
-
-  def select_item
+  def buy_item
     @item = @items[0]
     number = $game_party.item_number(@item)
     if @item == nil or @item.price > $game_party.gold or number >= 99
@@ -136,10 +126,24 @@ class Scene_ShopCustom < Scene_Base
         show_msg("Not available.")
       end
     else
-      Sound.play_decision
+      Audio.se_play("Audio/SE/GetReward", 80, 100)
       max = @item.price == 0 ? 99 : $game_party.gold / @item.price
       max = [max, 99 - number].min
+      @status_window.active = true
       @status_window.set(@item, max, @item.price)
+      @status_window.visible = true
+    end
+  end
+
+  def sell_item
+    @item = @items[0]
+    if @item == nil or @item.price == 0
+      Sound.play_buzzer
+    else
+      Audio.se_play("Audio/SE/GetReward", 80, 100)
+      max = $game_party.item_number(@item)
+      @status_window.active = true
+      @status_window.set(@item, max, @item.price / 2)
       @status_window.visible = true
     end
   end
@@ -155,6 +159,9 @@ class Scene_ShopCustom < Scene_Base
     reset_item_quantity
     $scene = Scene_Map.new
     Call_Common_Event.new(28) #Update HUD meat counter
+    if $shop_mode == 1
+      Call_Common_Event.new(51) #Check inventory after sell
+    end
   end
 
 end

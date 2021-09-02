@@ -21,7 +21,8 @@ class Scene_Map < Scene_Base
     if Graphics.brightness == 0       # After battle or loading, etc.
       fadein(30)
     else                              # Restoration from menu, etc.
-      Graphics.transition(15)
+      fade_speed = $transfer_speed && $transfer_speed != nil ? $transfer_speed : 10
+      Graphics.transition(fade_speed)
     end
   end
   #--------------------------------------------------------------------------

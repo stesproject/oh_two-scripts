@@ -4,7 +4,6 @@
 # Version: 1.0
 #==============================================================================
 
-#==============================================================================
 # ** Spriteset_Map
 #------------------------------------------------------------------------------
 #  This class brings together map screen sprites, tilemaps, etc. It's used
@@ -22,7 +21,6 @@ class Spriteset_Map
   # * Object Initialization
   #--------------------------------------------------------------------------
   def initialize
-    # create_windows
     $tw = nil
     spriteset_name_window_initialize
     update
@@ -32,7 +30,7 @@ class Spriteset_Map
   #--------------------------------------------------------------------------
   def create_windows
     $tw = Window_MapTexts.new
-    $tw.show_name
+    $tw.show_texts
   end
   #--------------------------------------------------------------------------
   # * Frame Update
@@ -57,7 +55,7 @@ end
 #==============================================================================
 # ** Window_MapTexts
 #------------------------------------------------------------------------------
-#  This window shows the map name when the player is transfered.
+#  Display texts on screen
 #==============================================================================
 
 class Window_MapTexts < Window_Base
@@ -80,16 +78,22 @@ class Window_MapTexts < Window_Base
     self.visible = true
     self.contents.clear
     self.contents.font.color = normal_color
+    self.contents.font.italic = false
     lh = @lh
     @texts.each do |text|
+      if text.include? "/c"
+        self.contents.font.color = text_color(23)
+        text.sub! "/c", ""
+      end
       self.contents.draw_text(0,0,504,lh,text,1)
+      self.contents.font.color = normal_color
       lh += @lh
     end
   end
   #--------------------------------------------------------------------------
-  # * Show Name
+  # * Show Texts
   #--------------------------------------------------------------------------
-  def show_name(texts=@texts, lh=@lh)
+  def show_texts(texts=@texts, lh=@lh)
     @texts = texts
     @lh = lh
     refresh

@@ -35,12 +35,26 @@ class Window_ShopStatus < Window_Base
       symbol = @item.is_a?(RPG::Item) ? ":" : "" 
       draw_item_name(@item, 0, y, true, text_width, symbol)
       if @item.is_a?(RPG::Item)
-        number = $game_party.item_number(@item)
-        owned = $local.get_text("possession")
-        self.contents.draw_text(text_width + 10, y, 32, WLH, number, 2)
-        self.contents.draw_text(text_width + 44, y, 180, WLH, " #{owned}")
+        draw_owned(text_width, y)
+      elsif @item.is_a?(RPG::Weapon)
+        draw_weapon_params(text_width, y)
       end
     end
+  end
+
+  def draw_owned(width, y)
+    number = $game_party.item_number(@item)
+    owned = $local.get_text("possession")
+    self.contents.draw_text(width + 10, y, 32, WLH, number, 2)
+    self.contents.draw_text(width + 44, y, 180, WLH, " #{owned}")
+  end
+
+  def draw_weapon_params(width, y)
+    param = $local.get_text("attack")
+    value = @item.atk
+    self.contents.font.color = text_color(17)
+    self.contents.draw_text(width + 20, y, 64, WLH, "| #{param}:")
+    self.contents.draw_text(width + 76, y, 32, WLH, " #{value}")
   end
   # CHECK IF METHODS BELOW ARE USED
   #--------------------------------------------------------------------------

@@ -185,6 +185,7 @@ class Localization
     "cheat_5" => 47,
     "cheat_6" => 48,
     "Armor" => 49,
+    "Munizioni" => 50,
   }
 
   class ItemText

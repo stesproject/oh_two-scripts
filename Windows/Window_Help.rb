@@ -24,7 +24,15 @@ class Window_Help < Window_Base
       self.contents.font.color = @color
       self.contents.font.italic = false
       self.contents.font.shadow = false
-      self.contents.draw_text(0, 0, self.width - 40, WLH, text, align)
+      y = 0
+      if text.kind_of?(Array)
+        for t in text
+          self.contents.draw_text(0, y, self.width - 40, WLH, t, align)
+          y += 24
+        end
+      else
+        self.contents.draw_text(0, y, self.width - 40, WLH, text, align)
+      end
       @text = text
       @align = align
     end

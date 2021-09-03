@@ -243,7 +243,7 @@ class Localization
     split_data(line_data)
 
     text.name = @messages[0]
-    text.desc = @messages[1]
+    text.desc = "#{@messages[1]}§#{@messages[2]}§#{@messages[3]}"
 
     return text
   end

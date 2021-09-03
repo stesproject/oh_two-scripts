@@ -17,7 +17,6 @@ class Window_ShopNumber < Window_Base
     @max = 1
     @price = 0
     @number = 1
-    self.opacity = 0
     refresh
   end
   #--------------------------------------------------------------------------
@@ -46,14 +45,14 @@ class Window_ShopNumber < Window_Base
     self.contents.clear
     self.contents.font.italic = false
     self.contents.font.shadow = false
-    self.contents.font.color = dark_color
+    self.contents.font.color = normal_color
 
     self.contents.draw_text(x, y, width, WLH, "×")
     self.contents.draw_text(x + 24, y, width, WLH, @number, 2)
     self.cursor_rect.set(x + 20, y, width + 8, WLH)
     self.contents.draw_text(x + 58, y, width, WLH, "=")
 
-    draw_currency_value(@price * @number, x + 26, y, 120, dark_color, text_color(10))
+    draw_currency_value(@price * @number, x + 26, y, 120)
   end
   #--------------------------------------------------------------------------
   # * Frame Update

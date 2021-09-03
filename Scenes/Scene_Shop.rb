@@ -18,7 +18,7 @@ class Scene_Shop < Scene_Base
     @help_window.visible = false
     @help_window.active = false
     @gold_window = $gold_window
-    @status_window = Window_ShopNumber.new(0, 316, 544, 100)
+    @status_window = Window_ShopNumber.new(0, 330, 544, 86)
     @status_window.visible = false
     @status_window.active = false
 

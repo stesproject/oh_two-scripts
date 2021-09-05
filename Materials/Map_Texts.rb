@@ -81,12 +81,7 @@ class Window_MapTexts < Window_Base
     self.contents.font.italic = false
     lh = @lh
     @texts.each do |text|
-      if text.include? "/c"
-        self.contents.font.color = text_color(23)
-        text.sub! "/c", ""
-      end
       self.contents.draw_text(0,0,504,lh,text,1)
-      self.contents.font.color = normal_color
       lh += @lh
     end
   end

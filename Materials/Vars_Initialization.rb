@@ -12,13 +12,13 @@ class Vars_Initialization
 
     # Credits (script)
     $credits_script = [
-      "/cStefano Mercadante (Localization system)", 
-      "/cVlad (Crissaegrim ABS)", 
-      "/cMoghunter (Title screen)", 
-      "/cShuuchan (Fog system)", 
-      "/cBulleXt (Autosave system)", 
-      "/cWoratana (NeoSave system, Message system)", 
-      "/cAlly (Jump system)"
+      "STEFANO MERCADANTE (Localization system)", 
+      "VLAD (Crissaegrim ABS)", 
+      "MOGHUNTER (Title screen)", 
+      "SHUUCHAN (Fog system)", 
+      "BULLEXT (Autosave system)", 
+      "WORATANA (NeoSave system, Message system)", 
+      "ALLY (Jump system)"
     ]
   end
 end

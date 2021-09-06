@@ -91,9 +91,14 @@ class Locale_Loader
   end
 
   def save_language
-    file = File.open(LOCSETT::SETTINGS_FILENAME, "w")
-    Marshal.dump($lang, file)
-    file.close
+    begin
+      file = File.open(LOCSETT::SETTINGS_FILENAME, "w")
+      Marshal.dump($lang, file)
+    rescue
+      # Do nothing, file is still open
+    ensure
+      file.close
+    end
   end
 
 end

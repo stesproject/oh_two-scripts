@@ -23,8 +23,7 @@
 #   CONFIG    #
 #############
 module MOG_VX01
-# WEBSITE_URL = "https://stesproject.com"
-WEBSITE_URL = "https://store.steampowered.com/app/847560/Our_Hero_First/"
+WEBSITE_URL = "https://stesproject.com"
 #Ativar tela cheia.    (true = Ativar ou false = Desativar) 
 FULL_SCREEN = false
 # Tempo de transição.
@@ -53,6 +52,9 @@ TPLANE2_Y = 0
 TPLANE3_X = 5
 # Velocidade de movimento da camada 2 na vertical.
 TPLANE3_Y = 0
+
+ARROWS_X = 329
+ARROWS_Y = 319
 
 OPTIONS_X = 339
 OPTIONS_Y = 205
@@ -142,7 +144,7 @@ class Scene_Title
   end
   def perform_transition
     if $transition == true
-      Graphics.transition(TT , "Graphics/Title/Transition")
+      Graphics.transition(TT, "Graphics/Title/Transition")
     else
       Graphics.transition(20)
     end
@@ -177,6 +179,8 @@ class Scene_Title
     @sprite3.ox += TPLANE3_X
     @sprite3.oy += TPLANE3_Y
     @sprite_title.update if TWAVE == true
+    @arrows.opacity = @command_window.index == 3 ? 255 : 0
+    @cursor.x = @command_window.index != 3 ? CURSOR_X : CURSOR_X + 15
     if Input.trigger?(Input::C)
       case @command_window.index
       when 0    #New game
@@ -258,12 +262,15 @@ class Scene_Title
   end
   def create_title_graphic
     @sprite_title = Sprite.new    
-    @sprite_title.bitmap = Cache.picture("Title")  
+    @sprite_title.bitmap = Cache.picture("Title")
     @sprite_title.opacity = 0
     @com = Sprite.new
-    @com.bitmap = Cache.title("Com_00")  
+    @com.bitmap = Cache.title("Com_00")
     @com.opacity = 0
     @com.blend_type = 2
+    @arrows = Sprite.new
+    @arrows.bitmap = Cache.title("Arrows")
+    @arrows.opacity = 0
     @options = Sprite.new
     @options.bitmap = Cache.title("Options")
     @options.opacity = 0
@@ -297,6 +304,9 @@ class Scene_Title
     @cursor.x = CURSOR_X
     @cursor.y = CURSOR_Y
     @cursor.z = 7
+    @arrows.x = ARROWS_X
+    @arrows.y = ARROWS_Y
+    @arrows.z = 7
     @sprite_title.x = 237
     @sprite_title.y = 14
     @sprite_title.z = 8
@@ -311,6 +321,7 @@ class Scene_Title
     @sprite2.bitmap.dispose
     @sprite3.bitmap.dispose    
     @com.bitmap.dispose    
+    @arrows.bitmap.dispose    
     @options.bitmap.dispose    
     @container.bitmap.dispose    
     @cursor.bitmap.dispose    
@@ -319,6 +330,7 @@ class Scene_Title
     @sprite2.dispose
     @sprite3.dispose
     @com.dispose
+    @arrows.dispose
     @options.dispose
     @container.dispose
     @cursor.dispose

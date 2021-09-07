@@ -459,7 +459,6 @@ class Localization
     @msg_block = cells[lang_id]
 
     if @msg_block != nil && split_in_rows == true
-      # @msg_block.insert(0, "\\c[1]") #TODO: remove. For testing purpose only.
       convert_special_characters
       split_msg_block_in_rows
     end

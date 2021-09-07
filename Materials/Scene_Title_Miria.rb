@@ -181,6 +181,18 @@ class Scene_Title
     @sprite_title.update if TWAVE == true
     @arrows.opacity = @command_window.index == 3 ? 255 : 0
     @cursor.x = @command_window.index != 3 ? CURSOR_X : CURSOR_X + 15
+    case @command_window.index
+    when 0 #new game
+      @com.color = Color.new(0,158,255) 
+    when 1 #continue
+      @com.color = Color.new(255,68,0) 
+    when 2 #website
+      @com.color = Color.new(143,0,255) 
+    when 3 #language
+      @com.color = Color.new(0,66,255) 
+    when 4 #quit
+      @com.color = Color.new(0,9,255) 
+    end
     if Input.trigger?(Input::C)
       case @command_window.index
       when 0    #New game
@@ -267,6 +279,7 @@ class Scene_Title
     @com = Sprite.new
     @com.bitmap = Cache.title("Com_00")
     @com.opacity = 0
+    @com.color = Color.new(0,158,255) #new game
     @com.blend_type = 2
     @arrows = Sprite.new
     @arrows.bitmap = Cache.title("Arrows")

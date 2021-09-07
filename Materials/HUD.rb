@@ -58,8 +58,12 @@ class Window_CrissaegrimHud < Window_Base
     refresh
   end
   def refresh
-    draw_hp(@actor, 0, 0)
-    draw_mp(@actor, 0, 15)
+    if @actor.hp > 0
+      draw_hp(@actor, 0, 0)
+    end
+    if @actor.mp > 0
+      draw_mp(@actor, 0, 15)
+    end
     show_state(@actor, 130, 0)
     if Crissaegrim_ABS::Distance_Weapons.has_key?(@actor.weapon_id)
       if Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5] > 0

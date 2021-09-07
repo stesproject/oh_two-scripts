@@ -119,7 +119,7 @@ class Localization
     "Green Forest" => 1,
     "Castle Grounds" => 2,
     "Castle Dungeons" => 3,
-    "King's Castle" => 4,
+    "Kings Castle" => 4,
     "Throne Room" => 5,
     "Teorhemas Vault" => 6,
     "Arena" => 7,

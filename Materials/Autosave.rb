@@ -117,8 +117,6 @@ class Auto_Save < Scene_File
   end
 end
 
-
-
 class Scene_File < Scene_Base
   include Wora_NSS
   attr_reader :window_slotdetail

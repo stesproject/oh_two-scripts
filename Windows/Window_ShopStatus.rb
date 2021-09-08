@@ -39,7 +39,7 @@ class Window_ShopStatus < Window_Base
       y = 0
       self.contents.font.italic = false
       text_width = self.contents.text_size(@item.name).width
-      text_width += 20
+      text_width += 12
       symbol = @item.is_a?(RPG::Item) ? ":" : "" 
       draw_item_name(@item, 0, y, true, text_width, symbol)
       if @item.is_a?(RPG::Item)
@@ -61,19 +61,21 @@ class Window_ShopStatus < Window_Base
     @help_window.set_text(desc)
   end
 
-  def draw_items_owned(width, y)
+  def draw_items_owned(x, y)
     number = $game_party.item_number(@item)
+    number_width = self.contents.text_size(number).width
+    text_width = x + number_width
     owned = $local.get_text("possession")
-    self.contents.draw_text(width + 10, y, 32, WLH, number, 2)
-    self.contents.draw_text(width + 44, y, 180, WLH, " #{owned}")
+    self.contents.draw_text(text_width, y, 32, WLH, number, 2)
+    self.contents.draw_text(text_width + 36, y, 180, WLH, " #{owned}")
   end
 
-  def draw_weapon_params(width, y)
+  def draw_weapon_params(x, y)
     param = $local.get_text("attack")
     value = @item.atk
     self.contents.font.color = text_color(17)
-    self.contents.draw_text(width + 20, y, 64, WLH, "| #{param}:")
-    self.contents.draw_text(width + 76, y, 32, WLH, " #{value}")
+    self.contents.draw_text(x + 20, y, 64, WLH, "| #{param}:")
+    self.contents.draw_text(x + 76, y, 32, WLH, " #{value}")
   end
   #--------------------------------------------------------------------------
   # * Set Item

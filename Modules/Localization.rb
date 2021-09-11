@@ -187,6 +187,7 @@ class Localization
     "Armor" => 49,
     "Munizioni" => 50,
     "currency" => 51,
+    "Fodera" => 52
   }
 
   class ItemText
@@ -386,24 +387,7 @@ class Localization
     reset_msg_vars
 
     weapon = $data_weapons[index]
-
-    equipped_sword_atk = $game_variables[85]
-    diff = weapon.atk - equipped_sword_atk
-
-    diff_text = ""
-    if diff < 0 
-      # selected sword is worst than the one equipped
-      diff_text = "\\c[8](#{diff})"
-    elsif diff > 0
-      # selected sword is better than the one equipped
-      diff_text = "\\c[11](+#{diff})"
-    elsif diff == 0
-      # selected sword and the one equipped are equal
-    end
-
-    atk = get_text("attack")
-    msg = "#{weapon.name.upcase} \\c[3]#{atk}: #{weapon.atk} #{diff_text}"
-    @messages.push(msg)
+    @messages.push("")
 
     if Weapons::CAN_UPGRADE.include?(index)
       upgrade_data = weapon.note.split("/")

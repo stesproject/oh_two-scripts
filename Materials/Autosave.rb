@@ -80,8 +80,8 @@ module Wora_NSS
   # Usa {id} per l'ID dello slot
   SAVE_PATH = '' # Percorso del salvataggio, e.g. 'Save/' or '' (per il percorso default)
   
-  SAVED_SLOT_ICON = 23 # IconaIndex per il save slot
-  EMPTY_SLOT_ICON = 22 # Colore per lo slot vuoto
+  SAVED_SLOT_ICON = 21 # IconaIndex per il save slot
+  EMPTY_SLOT_ICON = 20 # Colore per lo slot vuoto
   
   DRAW_GOLD = true # Mostara oro
   DRAW_PLAYTIME = true # Mostra tempo di gioco

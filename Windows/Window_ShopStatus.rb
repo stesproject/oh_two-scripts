@@ -46,6 +46,7 @@ class Window_ShopStatus < Window_Base
   #--------------------------------------------------------------------------
   def refresh
     self.contents.clear
+    self.contents.font.color = normal_color
     if @item != nil
       x = 0
       y = 0
@@ -58,12 +59,7 @@ class Window_ShopStatus < Window_Base
           draw_item_description if @with_description
         end
       elsif @item.is_a?(RPG::Weapon)
-        if @is_equip
-          $local.set_weapon_stats(@item.id)
-          draw_weapon_stats
-        else
-          draw_weapon_shop
-        end
+        draw_weapon_stats
       end
     end
   end
@@ -90,19 +86,6 @@ class Window_ShopStatus < Window_Base
     end
   end
 
-  def draw_weapon_shop
-    x = TEXT_X
-    y = 0
-    param = $local.get_text("attack")
-    value = @item.atk
-    text_width = self.contents.text_size(@item.name).width
-    self.contents.draw_text(x, y, text_width, WLH, "#{@item.name}")
-    x += text_width
-    self.contents.font.color = text_color(17)
-    self.contents.draw_text(x, y, 544 - x, WLH, " | #{param}: #{value}")
-    self.contents.font.color = normal_color
-  end
-
   def draw_weapon_stats
     x = TEXT_X
     y = 0
@@ -116,7 +99,7 @@ class Window_ShopStatus < Window_Base
     x += text_width
     text = " #{$local.get_text("attack")}: #{@item.atk}"
     text_width = self.contents.text_size(text).width
-    self.contents.font.color = text_color(3)
+    self.contents.font.color = text_color(17)
     self.contents.draw_text(x, y, 544 - x, WLH, "#{text}")
 
     x += text_width
@@ -127,7 +110,7 @@ class Window_ShopStatus < Window_Base
       diff_text = "(#{diff})"
     elsif diff > 0
       # selected sword is better than the one equipped
-      self.contents.font.color = text_color(11)
+      self.contents.font.color = text_color(3)
       diff_text = "(+#{diff})"
     elsif diff == 0
       # selected sword and the one equipped are equal
@@ -158,7 +141,6 @@ class Window_ShopStatus < Window_Base
 
   def clear
     self.contents.clear
-    self.contents.font.color = normal_color
     @help_window.set_text("")
   end
 end

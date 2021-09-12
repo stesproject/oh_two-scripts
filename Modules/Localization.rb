@@ -390,7 +390,7 @@ class Localization
     @messages.push("")
 
     if Weapons::CAN_UPGRADE.include?(index)
-      upgrade_data = weapon.note.split("/")
+      upgrade_data = weapon.note.split("\n")[0].split("/")
 
       $game_variables[87] = upgrade_data[0].to_i # Red Globes / Id of the item needed to upgrade the weapon
       if upgrade_data.size > 1

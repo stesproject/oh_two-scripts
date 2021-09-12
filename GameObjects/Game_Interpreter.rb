@@ -1702,4 +1702,7 @@ class Game_Interpreter
     eval(script)
     return true
   end
+  def get_event_id
+    return @event_id
+  end
 end

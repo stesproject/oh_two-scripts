@@ -45,7 +45,9 @@ class Localization
     "not_enough_eggs" => 17,
     "to_upgrade_w_item" => 18,
     "not_1_item" => 19,
-    "not_enough_d" => 20
+    "not_enough_d" => 20,
+    "cant_upgrade_armor" => 21,
+    "def_up" => 22
 }
 
   VOCABS_INDEXES = {
@@ -113,6 +115,8 @@ class Localization
     "icy" => 62,
     "electric" => 63,
     "upgrade_to_use" => 64,
+    "defence" => 65,
+    "upgrade_armor" => 66
   }
 
   MAPS_INDEXES = {
@@ -187,7 +191,8 @@ class Localization
     "Armor" => 49,
     "Munizioni" => 50,
     "currency" => 51,
-    "Fodera" => 52
+    "Fodera" => 52,
+    "Ultimate Armor" => 53
   }
 
   class ItemText

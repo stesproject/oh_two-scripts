@@ -60,6 +60,8 @@ class Window_ShopStatus < Window_Base
         end
       elsif @item.is_a?(RPG::Weapon)
         draw_weapon_stats
+      elsif @item.is_a?(RPG::Armor)
+        draw_armor_stats
       end
     end
   end
@@ -117,6 +119,20 @@ class Window_ShopStatus < Window_Base
     end
     text_width = self.contents.text_size(diff_text).width
     self.contents.draw_text(x, y, 544 - x, WLH, " #{diff_text}")
+  end
+
+  def draw_armor_stats
+    x = TEXT_X
+    y = 0
+
+    text_width = self.contents.text_size(@item.name).width
+    self.contents.draw_text(x, y, text_width, WLH, "#{@item.name}")
+
+    x += text_width
+    text = " #{$local.get_text("defence")}: #{$game_variables[36]}"
+    text_width = self.contents.text_size(text).width
+    self.contents.font.color = text_color(17)
+    self.contents.draw_text(x, y, 544 - x, WLH, "#{text}")
   end
 
   def draw_cheat_info

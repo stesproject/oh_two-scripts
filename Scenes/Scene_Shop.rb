@@ -6,6 +6,7 @@
 class Scene_Shop < Scene_Base
   ONE_AVAILABLE = [13] #Item ids whose only one unit is available
   SWORDS_VARIABLE_ID = 13
+  $items_higher_q = [6]
   #--------------------------------------------------------------------------
   # * Start processing
   #--------------------------------------------------------------------------
@@ -118,18 +119,19 @@ class Scene_Shop < Scene_Base
   def buy_item
     @item = @items[0]
     number = $game_party.item_number(@item)
-    if @item == nil or @item.price > $game_party.gold or number >= 99
+    max_q = $items_higher_q.include?(@item.id) ? 999 : 99
+    if @item == nil or @item.price > $game_party.gold or number >= max_q
       Sound.play_buzzer
       if @item.price > $game_party.gold
         text = $local.set_common_msg("not_enough_d")
         show_msg($local.get_msg_vars[0])
-      elsif number >= 99
+      elsif number >= max_q
         show_msg("Not available.")
       end
     else
       Audio.se_play("Audio/SE/GetReward", 80, 100)
-      max = @item.price == 0 ? 99 : $game_party.gold / @item.price
-      max = [max, 99 - number].min
+      max = @item.price == 0 ? max_q : $game_party.gold / @item.price
+      max = [max, max_q - number].min
       max = ONE_AVAILABLE.include?(@item.id) || @item.is_a?(RPG::Weapon) ? 1 : max
       @status_window.active = true
       @status_window.set(@item, max, @item.price)

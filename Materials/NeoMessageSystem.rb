@@ -471,6 +471,7 @@ class Window_Message < Window_Selectable
     contents.font.shadow = Font.default_shadow
     contents.font.italic = NO_ITALIC_MAPS.include?($game_map.map_id) ? false : Font.default_italic
     contents.font.bold = Font.default_bold
+    @nms.lbl = true
   end
   #--------------------------------------------------------------------------
   # ● EDITED
@@ -635,6 +636,7 @@ class Window_Message < Window_Selectable
     @number_input_window.visible = false
     $game_message.main_proc.call if $game_message.main_proc != nil
     $game_message.clear
+    $game_switches[1] = $game_switch_1_status
   end
   #--------------------------------------------------------------------------
   # ● EDITED
@@ -1034,6 +1036,8 @@ end
 class Game_Interpreter
   def command_101
     unless $game_message.busy
+      $game_switch_1_status = $game_switches[1]
+      $game_switches[1] = false
       $game_message.event_id = @event_id
       $game_message.face_name = @params[0]
       $game_message.face_index = @params[1]

@@ -200,11 +200,11 @@ class Game_Party < Game_Unit
     number = item_number(item)
     var_id = get_var_id(item)
     if var_id > 0
-      $game_variables[var_id] = [[number + n, 0].max, 99].min
+      $game_variables[var_id] = [[number + n, 0].max, 999].min
     else
       case item
       when RPG::Item
-        @items[item.id] = [[number + n, 0].max, 99].min
+        @items[item.id] = [[number + n, 0].max, 999].min
       when RPG::Weapon
         @weapons[item.id] = [[number + n, 0].max, 99].min
       when RPG::Armor

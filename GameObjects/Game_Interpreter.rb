@@ -1705,4 +1705,8 @@ class Game_Interpreter
   def get_event_id
     return @event_id
   end
+  def check_event_coords(x,y)
+    ev = $game_map.events[@event_id]
+    return ev.x == x && ev.y == y
+  end
 end

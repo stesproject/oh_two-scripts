@@ -23,6 +23,7 @@
 # CONFIGURAÇÃO GERAL
 #------------------------------------------------------------------------------
 module Crissaegrim_ABS
+$no_drop = false
 #------------------------------------------------------------------------------
 #Tecla de Ataque com a mão direita
 Right_Attack_Button = Input::Letters["S"]
@@ -484,7 +485,7 @@ class Game_Event < Game_Character
 def kill_enemy
     if @opacity >= 250
     $game_party.members[0].gain_exp(@enemy_called.exp, 1)
-    make_drop
+    make_drop if !$no_drop
   end
   if Crissaegrim_ABS::Enemy_animations[@enemy_id] != nil and Crissaegrim_ABS::Enemy_animations[@enemy_id][1] != 0
     @animation_id = Crissaegrim_ABS::Enemy_animations[@enemy_id][1]
@@ -675,12 +676,13 @@ class Game_Player < Game_Character
         @skill_attack = false
         @item_attack = false
         @deffending = false
-        range_attack_right
         if $game_party.has_item?($data_items[Crissaegrim_ABS::Distance_Weapons[@attack_weapon][5]])
           Audio.se_play("Audio/SE/"+Crissaegrim_ABS::Weapon_Shot_SE[@attack_weapon],80,100) if Crissaegrim_ABS::Weapon_Shot_SE[@attack_weapon] != nil and Crissaegrim_ABS::Weapon_Shot_SE[@attack_weapon] != ""
         else
-          Sound.play_buzzer
+          Audio.se_play("Audio/SE/Blow2", 80, 75)
+          # Sound.play_buzzer
         end
+        range_attack_right
       else
         normal_attack_right
       end

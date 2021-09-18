@@ -6,7 +6,7 @@
 class Scene_Shop < Scene_Base
   ONE_AVAILABLE = [13] #Item ids whose only one unit is available
   SWORDS_VARIABLE_ID = 13
-  $items_higher_q = [6]
+  $items_higher_q = [4,6]
   #--------------------------------------------------------------------------
   # * Start processing
   #--------------------------------------------------------------------------

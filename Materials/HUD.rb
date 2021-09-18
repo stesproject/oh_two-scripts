@@ -67,23 +67,24 @@ class Window_CrissaegrimHud < Window_Base
     show_state(@actor, 130, 0)
     if Crissaegrim_ABS::Distance_Weapons.has_key?(@actor.weapon_id)
       if Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5] > 0
-        show_icon($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]], 17, 346)
-        self.contents.font.size = 18
-        self.contents.font.color = dark_color
-        self.contents.draw_text(100, 20, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]]),1)
-        self.contents.font.size = 16
+        show_icon($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]], 84, 22)
+        # self.contents.font.size = 18
+        # self.contents.font.color = dark_color
+        # self.contents.draw_text(100, 20, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]]),1)
+        self.contents.font.size = 14
+        self.contents.font.italic = false
         self.contents.font.color = text_color(0)
-        self.contents.draw_text(100, 20, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]]),1)
+        self.contents.draw_text(100, 20, 36, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][5]]),1)
       end
-      if Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6] > 0
-        show_icon($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]], 61, 346)
-        self.contents.font.size = 18
-        self.contents.font.color = dark_color
-        self.contents.draw_text(600, 354, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]]),1)
-        self.contents.font.size = 16
-        self.contents.font.color = text_color(0)
-        self.contents.draw_text(610, 355, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]]),1)
-      end
+      # if Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6] > 0
+      #   show_icon($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]], 61, 346)
+      #   self.contents.font.size = 18
+      #   self.contents.font.color = dark_color
+      #   self.contents.draw_text(600, 354, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]]),1)
+      #   self.contents.font.size = 16
+      #   self.contents.font.color = text_color(0)
+      #   self.contents.draw_text(610, 355, 24, 28, $game_party.item_number($data_items[Crissaegrim_ABS::Distance_Weapons[@actor.weapon_id][6]]),1)
+      # end
     end
   end
   def show_state(actor, x, y)

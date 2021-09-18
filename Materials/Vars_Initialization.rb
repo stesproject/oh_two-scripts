@@ -36,7 +36,7 @@ class Vars_Initialization
       "RPGMAKER 3 MUSIC PACK (Forest)", 
     ]
     $credits_music_2 = [
-      "JUDE (Cyberspace)", 
+      "PLASTIC SOUND DESIGN (Cyberspace)", 
       "AARON KROGH (Suburbs)", 
       "EMANUEL (Race)",
       "SNOWY FOX (Ancient Ruins)", 

@@ -667,7 +667,7 @@ class Game_Player < Game_Character
       self.set_graphic($game_actors[$game_party.members[0].id].character_name, $game_actors[$game_party.members[0].id].character_index)
       @step_anime = false
     end
-    if Input.trigger?(Crissaegrim_ABS::Right_Attack_Button) and @deffending == false
+    if Input.trigger?(Crissaegrim_ABS::Right_Attack_Button) and @deffending == false and $game_switches[1] and !$game_switches[10]
       @attack_weapon = @actor.weapon_id
       anime_hero_attack if @anime_attack_time <= 0
       if Crissaegrim_ABS::Distance_Weapons.has_key?(@attack_weapon) and @attack_weapon != 0 and @right_attack_time <= 0

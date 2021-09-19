@@ -31,7 +31,6 @@ class Game_Player < Game_Character
     @new_y = 0                      # Destination Y coordinate
     @new_direction = 0              # Post-movement direction
     @walking_bgm = nil              # For walking BGM memory
-    @jump_time = 0
   end
   #--------------------------------------------------------------------------
   # * Determine if Stopping
@@ -337,7 +336,6 @@ class Game_Player < Game_Character
     update_scroll(last_real_x, last_real_y)
     update_vehicle
     update_nonmoving(last_moving)
-    @jump_time -= 1 if @jump_time && @jump_time > 0
   end
   #--------------------------------------------------------------------------
   # * Update Scroll

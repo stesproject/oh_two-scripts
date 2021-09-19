@@ -35,6 +35,19 @@ class Game_Player < Game_Character
   SWITCHSALTO = 21 # Switch che attiva/disattiva il salto
   SWITCHSALTO_Y = 299 # Switch che attiva/disattiva il salto giu/su
 
+  alias jump_initialize initialize
+  alias jump_update update
+
+  def initialize
+    jump_initialize
+    @jump_time = 0
+  end
+
+  def update
+    jump_update
+    @jump_time -= 1 if @jump_time > 0
+  end
+
   alias_method :salto_move_by_input, :move_by_input
   def move_by_input
     salto_move_by_input

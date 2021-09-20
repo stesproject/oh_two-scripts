@@ -11,6 +11,7 @@ class Game_Interpreter
   #     depth : nest depth
   #     main  : main flag
   #--------------------------------------------------------------------------
+  attr_reader :map_id
   def initialize(depth = 0, main = false)
     @depth = depth
     @main = main

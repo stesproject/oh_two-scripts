@@ -297,6 +297,7 @@ class Game_Event < Game_Character
     @switch_local_c = check_com("Die Switch Local C")
     @switch_local_d = check_com("Die Switch Local D")
     @switch = check_comment("Die Switch")
+    @switch2 = check_comment("Die Switch2")
     @variable = check_comment("Die Variable")
     @kill_weapon = check_comment("Kill Weapon")
     @kill_skill = check_comment("Kill Skill")
@@ -526,13 +527,18 @@ def kill_enemy
     elsif $game_self_switches[key] == true
       $game_self_switches[key] = false
     end
-  elsif @switch > 0 and
+  end
+  if @switch > 0 and
     if $game_switches[@switch] == false
       $game_switches[@switch] = true
     elsif $game_switches[@switch] == true
       $game_switches[@switch] = false
     end
-  elsif @variable > 0
+  end
+  if @switch2 > 0
+    $game_switches[@switch2] = !$game_switches[@switch2]
+  end
+  if @variable > 0
     $game_variables[@variable] += 1
   end
   @in_battle = false

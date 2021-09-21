@@ -4,7 +4,7 @@
 #  This class performs shop screen processing.
 #==============================================================================
 class Scene_Shop < Scene_Base
-  ONE_AVAILABLE = [13] #Item ids whose only one unit is available
+  ONE_ONLY = [13] #Item ids whose only one unit is available
   SWORDS_VARIABLE_ID = 13
   $items_higher_q = [4,6]
   #--------------------------------------------------------------------------
@@ -132,7 +132,7 @@ class Scene_Shop < Scene_Base
       Audio.se_play("Audio/SE/GetReward", 80, 100)
       max = @item.price == 0 ? max_q : $game_party.gold / @item.price
       max = [max, max_q - number].min
-      max = ONE_AVAILABLE.include?(@item.id) || @item.is_a?(RPG::Weapon) ? 1 : max
+      max = ONE_ONLY.include?(@item.id) || @item.is_a?(RPG::Weapon) ? 1 : max
       @status_window.active = true
       @status_window.set(@item, max, @item.price)
       @status_window.visible = true

@@ -63,7 +63,7 @@ Distance_Skills[1] = ["Sfera di Fuoco", 5, 4, 10, 50]
 Distance_Skills[2] = ["Energy Ball", 5, 5, 7, 200]
 Distance_Skills[3] = ["Sfera di Fuoco", 7, 5, 30, 60]
 Distance_Skills[4] = ["Energy Ball", 5, 5, 20, 15]
-Distance_Skills[5] = ["Sfera di Fuoco", 5, 6, 20, 15]
+Distance_Skills[5] = ["Sfera di Fuoco", 5, 5, 12, 180]
 Distance_Skills[6] = ["!Other1", 1, 5, 153, 300]
 
 #------------------------------------------------------------------------------
@@ -1004,7 +1004,7 @@ class Game_Range < Game_Character
     turn_up if pd == 8
     @destroy = false
     @draw = false
-    @map_passable = parent.priority_type == 2
+    @map_passable = true # parent.is_a?(Game_Event)
   end
   def update
     super

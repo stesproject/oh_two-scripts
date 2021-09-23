@@ -136,6 +136,7 @@ class Localization
     "Kingdom Outskirts" => 14,
     "Race" => 15,
     "Ancient Ruins" => 16,
+    "Final Battle" => 17,
     "Water City" => 18,
   }
 

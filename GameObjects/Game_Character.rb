@@ -28,6 +28,7 @@ class Game_Character
   attr_accessor :animation_id             # animation ID
   attr_accessor :balloon_id               # balloon icon ID
   attr_accessor :transparent              # transparency flag
+  attr_accessor :map_passable             # disable map passable check
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
@@ -71,6 +72,7 @@ class Game_Character
     @locked = false                       # Locked flag
     @prelock_direction = 0                # Direction before lock
     @move_failed = false                  # Movement failed flag
+    @map_passable = false
   end
   #--------------------------------------------------------------------------
   # * Determine if Moving
@@ -152,7 +154,7 @@ class Game_Character
     y = $game_map.round_y(y)                        # Vertical loop adj.
     return false unless $game_map.valid?(x, y)      # Outside map?
     return true if @through or debug_through?       # Through ON?
-    return false unless map_passable?(x, y)         # Map Impassable?
+    return false if !@map_passable && !map_passable?(x, y)         # Map Impassable?
     return false if collide_with_characters?(x, y)  # Collide with character?
     return true                                     # Passable
   end

@@ -64,11 +64,7 @@ Distance_Skills[2] = ["Energy Ball", 5, 5, 7, 200]
 Distance_Skills[3] = ["Sfera di Fuoco", 7, 5, 30, 60]
 Distance_Skills[4] = ["Energy Ball", 5, 5, 20, 15]
 Distance_Skills[5] = ["Sfera di Fuoco", 5, 6, 20, 15]
-Distance_Skills[6] = ["Energy Ball", 0, 5, 20, 30]
-Distance_Skills[7] = ["!Other1", 2, 4, 30, 60]
-Distance_Skills[8] = ["Energy Ball", 3, 6, 20, 30]
-Distance_Skills[9] = ["Energy Ball", 3, 6, 20, 30]
-Distance_Skills[10] = ["Energy Ball", 3, 6, 20, 30]
+Distance_Skills[6] = ["!Other1", 1, 5, 153, 300]
 
 #------------------------------------------------------------------------------
 # Skills com animação
@@ -86,9 +82,7 @@ Skill_Cast_SE[2] = "Thunder6"
 Skill_Cast_SE[3] = "Thunder6"
 Skill_Cast_SE[4] = "Thunder6"
 Skill_Cast_SE[5] = "Fire1"
-Skill_Cast_SE[6] = "Fire1"
-Skill_Cast_SE[7] = "Thunder6"
-Skill_Cast_SE[8] = "Fire8"
+Skill_Cast_SE[6] = ""
 #------------------------------------------------------------------------------
 # Ítens de Distância.
 # Para criar um ítem de distância, copie: Distance_Items[U] = [V, W, X, Y, Z] e mude:
@@ -1010,6 +1004,7 @@ class Game_Range < Game_Character
     turn_up if pd == 8
     @destroy = false
     @draw = false
+    @map_passable = parent.priority_type == 2
   end
   def update
     super

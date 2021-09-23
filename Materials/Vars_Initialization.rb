@@ -10,6 +10,10 @@ class Vars_Initialization
     # Disable default menu
     $game_system.menu_disabled = true
 
+    # Debug
+    $game_switches[435] = $TEST && true #speed-up
+    $game_switches[436] = $TEST && true #power-up
+
     # Credits (script)
     $credits_script = [
       "STEFANO MERCADANTE (Localization system)", 

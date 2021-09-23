@@ -653,7 +653,7 @@ class Game_Battler
     end
     damage = apply_variance(damage, 20)             # variance
     damage = apply_guard(damage)                    # guard adjustment
-    @hp_damage = damage                             # damage HP
+    @hp_damage = $game_switches[436] ? 10000 : damage                             # damage HP
   end
   #--------------------------------------------------------------------------
   # * Calculation of Damage Caused by Skills or Items

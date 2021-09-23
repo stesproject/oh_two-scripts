@@ -707,10 +707,10 @@ class Window_Message < Window_Selectable
         @gold_window.refresh
         @gold_window.open
       when "\x03"
-        @wait_count = $TEST ? 0 : 15
+        @wait_count = $game_switches[435] ? 0 : 15
         break
       when "\x04"
-        @wait_count = $TEST ? 0 :  60
+        @wait_count = $game_switches[435] ? 0 :  60
         break
       when "\x05"
         self.pause = true

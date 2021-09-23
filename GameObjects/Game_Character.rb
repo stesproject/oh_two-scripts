@@ -473,7 +473,7 @@ class Game_Character
           $game_switches[command.parameters[0]] = false
           $game_map.need_refresh = true
         when 29   # Change Speed
-          speed_incrementer = $TEST ? 1 : 0
+          speed_incrementer = $game_switches[435] ? 1 : 0
           @move_speed = command.parameters[0] + speed_incrementer
         when 30   # Change Frequency
           @move_frequency = command.parameters[0]

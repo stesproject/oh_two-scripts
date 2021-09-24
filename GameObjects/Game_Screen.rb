@@ -98,6 +98,17 @@ class Game_Screen
     @shake_duration = duration
   end
   #--------------------------------------------------------------------------
+  # * Stop Shaking
+  #     power    : strength
+  #     speed    : speed
+  #     duration : time
+  #--------------------------------------------------------------------------
+  def stop_shake
+    @shake_power = 0
+    @shake_speed = 0
+    @shake_duration = 0
+  end
+  #--------------------------------------------------------------------------
   # * Set Weather
   #     type     : type
   #     power    : strength

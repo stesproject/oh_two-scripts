@@ -243,10 +243,18 @@ class Scene_File < Scene_Base
     $game_troop          = Marshal.load(file)
     $game_map            = Marshal.load(file)
     $game_player         = Marshal.load(file)
+    check_player_jump
     if $game_system.version_id != $data_system.version_id
       $game_map.setup($game_map.map_id)
       $game_player.center($game_player.x, $game_player.y)
     end
     Vars_Initialization.new
+  end
+
+  def check_player_jump
+    if (!$game_player.respond_to?(:jump_time))
+      $game_player.class.module_eval { attr_accessor :jump_time}
+      $game_player.jump_time = 0
+    end
   end
 end

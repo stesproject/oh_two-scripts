@@ -4,7 +4,7 @@
 #==============================================================================
 module LOCSETT
   PATH = "Data/Locale/"
-  LAST_MAP = 118
+  LAST_MAP = 117
   SETTINGS_FILENAME = "Settings.rvdata"
   LOADER_ENABLED = true
 end

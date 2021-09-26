@@ -10,7 +10,7 @@
 #   Set to switch id "1" by default.
 
 NO_MOVE_EVENTS_SWITCH_ID = 412
-NOT_SAVE_POSITION_MAPS = [2, 10, 16, 30, 101, 3, 4]
+NOT_SAVE_POSITION_MAPS = [2, 3, 4, 10, 16, 30, 76, 101, 114, 117, 118, 121]
 
 class Game_System
 

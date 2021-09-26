@@ -23,6 +23,7 @@
 #   CONFIG    #
 #############
 module MOG_VX01
+GAME_VERSION = "1.0.0"
 WEBSITE_URL = "https://stesproject.com"
 #Ativar tela cheia.    (true = Ativar ou false = Desativar) 
 FULL_SCREEN = false
@@ -81,6 +82,22 @@ module Cache
     end
   end
 end
+
+class Window_TitleText < Window_Base
+  def initialize
+    super(-12, 374, 544, 64)
+    refresh
+  end
+  def refresh
+    self.contents.clear
+    self.contents.font.size = 13
+    self.contents.font.italic = false
+    self.contents.font.shadow = false
+    self.contents.font.color.alpha = 164
+    self.contents.draw_text(0, 0, 544, 32, "#{MOG_VX01::GAME_VERSION}")
+  end
+end
+
 #############
 # Scene_Title #
 #############
@@ -135,11 +152,11 @@ class Scene_Title
   end
 
   def start
-    load_database                    
-    create_game_objects            
-    check_continue                    
-    create_title_graphic             
-    create_command_window         
+    load_database        
+    create_game_objects  
+    check_continue       
+    create_title_graphic 
+    create_command_window
     play_title_music     
   end
   def perform_transition
@@ -273,6 +290,7 @@ class Scene_Title
     @continue_enabled = (Dir.glob('Save*.rvdata').size > 0)
   end
   def create_title_graphic
+    draw_version_text
     @sprite_title = Sprite.new    
     @sprite_title.bitmap = Cache.picture("Title")
     @sprite_title.opacity = 0
@@ -348,6 +366,7 @@ class Scene_Title
     @container.dispose
     @cursor.dispose
     @sprite_title.dispose
+    @text_window.dispose
   end
   def create_command_window(index = 1)
     initialize_commands
@@ -497,5 +516,11 @@ class Scene_Title
       items[i].name = item.name
       items[i].description = item.desc
     end
+  end
+
+  def draw_version_text
+    @text_window = Window_TitleText.new
+    @text_window.back_opacity = 0
+    @text_window.opacity = 0
   end
 end

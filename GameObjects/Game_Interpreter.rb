@@ -997,6 +997,7 @@ class Game_Interpreter
       y = $game_variables[@params[3]]
       direction = @params[4]
     end
+    $game_map.screen.pictures[20].erase
     $game_player.reserve_transfer(map_id, x, y, direction)
     @index += 1
     return false

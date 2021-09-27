@@ -214,7 +214,11 @@ class Scene_File < Scene_Base
     Marshal.dump(@last_bgm,            file)
     Marshal.dump(@last_bgs,            file)
     Marshal.dump($game_system,         file)
-    Marshal.dump($game_message,        file)
+    begin
+      Marshal.dump($game_message,        file)
+    rescue
+      Marshal.dump(Game_Message.new,     file)
+    end
     Marshal.dump($game_switches,       file)
     Marshal.dump($game_variables,      file)
     Marshal.dump($game_self_switches,  file)

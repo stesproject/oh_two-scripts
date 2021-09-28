@@ -13,6 +13,7 @@ class Game_Event < Game_Character
   attr_reader   :trigger                  # trigger
   attr_reader   :list                     # list of event commands
   attr_reader   :starting                 # starting flag
+  attr_reader   :page                     # current page
   #--------------------------------------------------------------------------
   # * Object Initialization
   #     map_id : map ID

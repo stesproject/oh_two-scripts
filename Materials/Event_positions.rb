@@ -56,7 +56,12 @@ class Game_Map
   def save_positions
     return if @events.nil? || @events == { }        
     data = []
-    @events.values.each { |event| data += [[ event.id, event.x, event.y, event.direction ]] }       
+    # @events.values.each { |event| data += [[ event.id, event.x, event.y, event.direction ]] }
+    for event in @events.values
+      if event.page != nil && event.conditions_met?(event.page)
+        data += [[ event.id, event.x, event.y, event.direction ]]
+      end
+    end
     $game_system.save_event_position_data(@map_id, data)    
   end
 

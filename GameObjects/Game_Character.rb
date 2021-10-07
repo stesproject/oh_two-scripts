@@ -29,7 +29,6 @@ class Game_Character
   attr_accessor :balloon_id               # balloon icon ID
   attr_accessor :transparent              # transparency flag
   attr_accessor :map_passable             # disable map passable check
-  attr_accessor :move_route               # move_route
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------
@@ -74,6 +73,7 @@ class Game_Character
     @prelock_direction = 0                # Direction before lock
     @move_failed = false                  # Movement failed flag
     @map_passable = false
+    @repeats = 0
   end
   #--------------------------------------------------------------------------
   # * Determine if Moving
@@ -127,6 +127,7 @@ class Game_Character
     @move_route_forcing = true
     @prelock_direction = 0
     @wait_count = 0
+    @repeats = 0
     move_type_custom
   end
   #--------------------------------------------------------------------------
@@ -406,9 +407,12 @@ class Game_Character
     if stopping?
       command = @move_route.list[@move_route_index]   # Get movement command
       @move_failed = false
-      if command.code == 0                            # End of list
-        if @move_route.repeat                         # [Repeat Action]
+      repeat = $route_repeat != nil && @repeats < $route_repeat
+      skip = $route_repeat != nil && $route_repeat <= 0
+      if command.code == 0 || skip                    # End of list
+        if @move_route.repeat || repeat               # [Repeat Action]
           @move_route_index = 0
+          @repeats += 1
         elsif @move_route_forcing                     # Forced move route
           @move_route_forcing = false                 # Cancel forcing
           @move_route = @original_move_route          # Restore original

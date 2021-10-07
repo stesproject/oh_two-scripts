@@ -29,6 +29,7 @@ class Game_Character
   attr_accessor :balloon_id               # balloon icon ID
   attr_accessor :transparent              # transparency flag
   attr_accessor :map_passable             # disable map passable check
+  attr_accessor :move_route               # move_route
   #--------------------------------------------------------------------------
   # * Object Initialization
   #--------------------------------------------------------------------------

@@ -9,7 +9,7 @@ class Localization
   attr_accessor :message_row
 
   NEW_LINE_CHAR = "§"
-  ROW_LENGTH_MAX = 52
+  ROW_LENGTH_MAX = $lang == "en" ? 50 : 52
   MESSAGES_MAX = 4
   SPECIAL_SYMBOLS = /\\nb\[(.*?)\]|\\\||\\\.|\\\^|\\g|\\c\[([0-9]+)\]|#{NEW_LINE_CHAR}/i
   SPECIAL_CHARS = /([àèìòùéÈ])+/

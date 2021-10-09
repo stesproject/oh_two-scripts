@@ -40,7 +40,7 @@ end
 class Boss_HUD < Sprite
   def initialize(id)
     @enemy = $game_map.events[id]
-    $game_switches[417] = false
+    $current_boss = @enemy.enemy_called
     super()
     self.bitmap = Bitmap.new(544,416)
     self.z = 99
@@ -48,11 +48,9 @@ class Boss_HUD < Sprite
   def update
     self.bitmap.clear
     show_bar(Enemy_Hud::Bar_X,Enemy_Hud::Bar_Y,@enemy.enemy_called.hp,@enemy.enemy_called.maxhp)
-    if $game_switches[417] == true
-      @enemy.enemy_called.hp = $enboss
-      $game_switches[417] = false
-    else
-      $enboss = @enemy.enemy_called.hp
+    if $game_variables[130] > 0
+      @enemy.enemy_called.hp = $game_variables[130]
+      $game_variables[130] = 0
     end
   end
   def show_bar(x,y,hp,max)

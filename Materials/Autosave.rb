@@ -261,6 +261,8 @@ class Scene_File < Scene_Base
     Graphics.wait(40)
     @last_bgm.play
     @last_bgs.play
+    $game_map.screen.pictures[20].erase
+    $game_map.interpreter.command_end
   end
   #--------------------------------------------------------------------------
   # * CONFERMA SALVATAGGIO

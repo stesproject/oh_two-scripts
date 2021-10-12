@@ -138,6 +138,7 @@ class Localization
     "Ancient Ruins" => 16,
     "Final Battle" => 17,
     "Water City" => 18,
+    "Sky" => 19,
   }
 
   DB_INDEXES = {

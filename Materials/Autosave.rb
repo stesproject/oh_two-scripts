@@ -30,7 +30,7 @@ SAVE_AFTER_WINNING_BATTLE = 1
 #Questo è  un'ID switch, se ON disabilità l'autosalvataggio dopo aver chiuso il menu
 SAVE_AFTER_CLOSING_MENU = 1
 
-
+NOT_END_COMMAND_MAPS = [114]
 
 #===============================================================
 # ? [VX] ? Neo Save System III ? ?
@@ -262,7 +262,9 @@ class Scene_File < Scene_Base
     @last_bgm.play
     @last_bgs.play
     $game_map.screen.pictures[20].erase
-    $game_map.interpreter.command_end
+    if !NOT_END_COMMAND_MAPS.include?($game_map.map_id)
+      $game_map.interpreter.command_end
+    end
   end
   #--------------------------------------------------------------------------
   # * CONFERMA SALVATAGGIO

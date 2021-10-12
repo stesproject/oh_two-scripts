@@ -59,7 +59,7 @@ Weapon_Shot_SE[19] = "Earth5"
 # Para criar uma skill de distância, copie: Distance_Skills[U] = [V, W, X, Y, Z] e mude:
 # U:ID da skill, V:Char, W:Index do Char, X:Velocidade, Y:Distância, Z:Tempo de espera para atacar
 Distance_Skills = {}
-Distance_Skills[1] = ["Sfera di Fuoco", 5, 4, 10, 50]
+Distance_Skills[1] = ["Sfera di Fuoco", 5, 4, 10, 90]
 Distance_Skills[2] = ["Energy Ball", 5, 5, 7, 200]
 Distance_Skills[3] = ["Sfera di Fuoco", 7, 5, 30, 60]
 Distance_Skills[4] = ["Energy Ball", 5, 5, 20, 15]

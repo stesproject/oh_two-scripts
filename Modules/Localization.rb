@@ -116,7 +116,9 @@ class Localization
     "electric" => 63,
     "upgrade_to_use" => 64,
     "defence" => 65,
-    "upgrade_armor" => 66
+    "upgrade_armor" => 66,
+    "fullscreen" => 67,
+    "windowed" => 68,
   }
 
   MAPS_INDEXES = {

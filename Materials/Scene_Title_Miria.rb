@@ -23,7 +23,7 @@
 #   CONFIG    #
 #############
 module MOG_VX01
-GAME_VERSION = "1.1.0"
+GAME_VERSION = "1.1.1"
 WEBSITE_URL = "https://stesproject.com"
 #Ativar tela cheia.    (true = Ativar ou false = Desativar) 
 FULL_SCREEN = false
